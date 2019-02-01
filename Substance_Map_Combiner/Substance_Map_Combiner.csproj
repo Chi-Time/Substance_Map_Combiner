@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FolderSelectDialog.cs" />
+    <Compile Include="ImageCombiner.cs" />
     <Compile Include="Main Window.cs">
       <SubType>Form</SubType>
     </Compile>

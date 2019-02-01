@@ -30,6 +30,7 @@
         {
             this.B_Source_Folder_Button = new System.Windows.Forms.Button();
             this.B_Destination_Folder = new System.Windows.Forms.Button();
+            this.B_Combine_Images = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // B_Source_Folder_Button
@@ -52,11 +53,22 @@
             this.B_Destination_Folder.UseVisualStyleBackColor = true;
             this.B_Destination_Folder.Click += new System.EventHandler(this.B_Destination_Folder_Click);
             // 
+            // B_Combine_Images
+            // 
+            this.B_Combine_Images.Location = new System.Drawing.Point(349, 214);
+            this.B_Combine_Images.Name = "B_Combine_Images";
+            this.B_Combine_Images.Size = new System.Drawing.Size(102, 22);
+            this.B_Combine_Images.TabIndex = 2;
+            this.B_Combine_Images.Text = "Combine";
+            this.B_Combine_Images.UseVisualStyleBackColor = true;
+            this.B_Combine_Images.Click += new System.EventHandler(this.B_Combine_Images_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.B_Combine_Images);
             this.Controls.Add(this.B_Destination_Folder);
             this.Controls.Add(this.B_Source_Folder_Button);
             this.Name = "MainWindow";
@@ -70,6 +82,7 @@
 
         private System.Windows.Forms.Button B_Source_Folder_Button;
         private System.Windows.Forms.Button B_Destination_Folder;
+        private System.Windows.Forms.Button B_Combine_Images;
     }
 }
 
