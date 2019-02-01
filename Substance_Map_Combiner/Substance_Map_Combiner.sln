@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Substance_Map_Combiner", "Substance_Map_Combiner.csproj", "{6A6E2EE6-56A0-4876-883A-4DA4C1313CAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A6E2EE6-56A0-4876-883A-4DA4C1313CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6E2EE6-56A0-4876-883A-4DA4C1313CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6E2EE6-56A0-4876-883A-4DA4C1313CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6E2EE6-56A0-4876-883A-4DA4C1313CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACED6D66-2F35-4C6C-9FED-581335C04E43}
+	EndGlobalSection
+EndGlobal
