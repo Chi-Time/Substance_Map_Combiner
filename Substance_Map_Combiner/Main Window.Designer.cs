@@ -47,6 +47,20 @@
             this.CB_Glossiness = new System.Windows.Forms.CheckBox();
             this.TxtBx_FileName = new System.Windows.Forms.TextBox();
             this.CB_FileType = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.B_BaseColorPicker = new System.Windows.Forms.Button();
+            this.B_RoughnessPicker = new System.Windows.Forms.Button();
+            this.B_AmbientOcclusionPicker = new System.Windows.Forms.Button();
+            this.B_IORPicker = new System.Windows.Forms.Button();
+            this.B_MetallicPicker = new System.Windows.Forms.Button();
+            this.B_NormalPicker = new System.Windows.Forms.Button();
+            this.B_NormalDXPicker = new System.Windows.Forms.Button();
+            this.B_HeightPicker = new System.Windows.Forms.Button();
+            this.B_EmissivePicker = new System.Windows.Forms.Button();
+            this.B_DiffusePicker = new System.Windows.Forms.Button();
+            this.B_SpecularPicker = new System.Windows.Forms.Button();
+            this.B_GlossinessPicker = new System.Windows.Forms.Button();
+            this.B_ReflectionPicker = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,19 +96,32 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Controls.Add(this.B_BaseColorPicker);
             this.flowLayoutPanel1.Controls.Add(this.checkBox1);
+            this.flowLayoutPanel1.Controls.Add(this.B_RoughnessPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Roughness);
+            this.flowLayoutPanel1.Controls.Add(this.B_MetallicPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Metallic);
+            this.flowLayoutPanel1.Controls.Add(this.B_AmbientOcclusionPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Ambient_Occlusion);
+            this.flowLayoutPanel1.Controls.Add(this.B_IORPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_IOR);
+            this.flowLayoutPanel1.Controls.Add(this.B_NormalPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Normal);
+            this.flowLayoutPanel1.Controls.Add(this.B_NormalDXPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_NormalDX);
+            this.flowLayoutPanel1.Controls.Add(this.B_HeightPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Height);
+            this.flowLayoutPanel1.Controls.Add(this.B_EmissivePicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Emissive);
-            this.flowLayoutPanel1.Controls.Add(this.CB_Reflection);
+            this.flowLayoutPanel1.Controls.Add(this.B_DiffusePicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Diffuse);
+            this.flowLayoutPanel1.Controls.Add(this.B_SpecularPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Specular);
+            this.flowLayoutPanel1.Controls.Add(this.B_GlossinessPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Glossiness);
+            this.flowLayoutPanel1.Controls.Add(this.B_ReflectionPicker);
+            this.flowLayoutPanel1.Controls.Add(this.CB_Reflection);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(37, 83);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -104,7 +131,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 3);
+            this.checkBox1.Location = new System.Drawing.Point(3, 32);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(77, 17);
             this.checkBox1.TabIndex = 0;
@@ -115,7 +142,7 @@
             // CB_Roughness
             // 
             this.CB_Roughness.AutoSize = true;
-            this.CB_Roughness.Location = new System.Drawing.Point(3, 26);
+            this.CB_Roughness.Location = new System.Drawing.Point(3, 84);
             this.CB_Roughness.Name = "CB_Roughness";
             this.CB_Roughness.Size = new System.Drawing.Size(80, 17);
             this.CB_Roughness.TabIndex = 1;
@@ -126,7 +153,7 @@
             // CB_Metallic
             // 
             this.CB_Metallic.AutoSize = true;
-            this.CB_Metallic.Location = new System.Drawing.Point(3, 49);
+            this.CB_Metallic.Location = new System.Drawing.Point(3, 136);
             this.CB_Metallic.Name = "CB_Metallic";
             this.CB_Metallic.Size = new System.Drawing.Size(62, 17);
             this.CB_Metallic.TabIndex = 2;
@@ -137,7 +164,7 @@
             // CB_Ambient_Occlusion
             // 
             this.CB_Ambient_Occlusion.AutoSize = true;
-            this.CB_Ambient_Occlusion.Location = new System.Drawing.Point(3, 72);
+            this.CB_Ambient_Occlusion.Location = new System.Drawing.Point(3, 188);
             this.CB_Ambient_Occlusion.Name = "CB_Ambient_Occlusion";
             this.CB_Ambient_Occlusion.Size = new System.Drawing.Size(114, 17);
             this.CB_Ambient_Occlusion.TabIndex = 3;
@@ -148,7 +175,7 @@
             // CB_IOR
             // 
             this.CB_IOR.AutoSize = true;
-            this.CB_IOR.Location = new System.Drawing.Point(3, 95);
+            this.CB_IOR.Location = new System.Drawing.Point(123, 32);
             this.CB_IOR.Name = "CB_IOR";
             this.CB_IOR.Size = new System.Drawing.Size(45, 17);
             this.CB_IOR.TabIndex = 4;
@@ -159,7 +186,7 @@
             // CB_Normal
             // 
             this.CB_Normal.AutoSize = true;
-            this.CB_Normal.Location = new System.Drawing.Point(3, 118);
+            this.CB_Normal.Location = new System.Drawing.Point(123, 84);
             this.CB_Normal.Name = "CB_Normal";
             this.CB_Normal.Size = new System.Drawing.Size(59, 17);
             this.CB_Normal.TabIndex = 5;
@@ -170,7 +197,7 @@
             // CB_NormalDX
             // 
             this.CB_NormalDX.AutoSize = true;
-            this.CB_NormalDX.Location = new System.Drawing.Point(3, 141);
+            this.CB_NormalDX.Location = new System.Drawing.Point(123, 136);
             this.CB_NormalDX.Name = "CB_NormalDX";
             this.CB_NormalDX.Size = new System.Drawing.Size(83, 17);
             this.CB_NormalDX.TabIndex = 6;
@@ -181,7 +208,7 @@
             // CB_Height
             // 
             this.CB_Height.AutoSize = true;
-            this.CB_Height.Location = new System.Drawing.Point(3, 164);
+            this.CB_Height.Location = new System.Drawing.Point(123, 188);
             this.CB_Height.Name = "CB_Height";
             this.CB_Height.Size = new System.Drawing.Size(57, 17);
             this.CB_Height.TabIndex = 7;
@@ -192,7 +219,7 @@
             // CB_Emissive
             // 
             this.CB_Emissive.AutoSize = true;
-            this.CB_Emissive.Location = new System.Drawing.Point(3, 187);
+            this.CB_Emissive.Location = new System.Drawing.Point(212, 32);
             this.CB_Emissive.Name = "CB_Emissive";
             this.CB_Emissive.Size = new System.Drawing.Size(67, 17);
             this.CB_Emissive.TabIndex = 8;
@@ -203,7 +230,7 @@
             // CB_Reflection
             // 
             this.CB_Reflection.AutoSize = true;
-            this.CB_Reflection.Location = new System.Drawing.Point(123, 3);
+            this.CB_Reflection.Location = new System.Drawing.Point(294, 32);
             this.CB_Reflection.Name = "CB_Reflection";
             this.CB_Reflection.Size = new System.Drawing.Size(74, 17);
             this.CB_Reflection.TabIndex = 9;
@@ -214,7 +241,7 @@
             // CB_Diffuse
             // 
             this.CB_Diffuse.AutoSize = true;
-            this.CB_Diffuse.Location = new System.Drawing.Point(123, 26);
+            this.CB_Diffuse.Location = new System.Drawing.Point(212, 84);
             this.CB_Diffuse.Name = "CB_Diffuse";
             this.CB_Diffuse.Size = new System.Drawing.Size(59, 17);
             this.CB_Diffuse.TabIndex = 10;
@@ -225,7 +252,7 @@
             // CB_Specular
             // 
             this.CB_Specular.AutoSize = true;
-            this.CB_Specular.Location = new System.Drawing.Point(123, 49);
+            this.CB_Specular.Location = new System.Drawing.Point(212, 136);
             this.CB_Specular.Name = "CB_Specular";
             this.CB_Specular.Size = new System.Drawing.Size(68, 17);
             this.CB_Specular.TabIndex = 11;
@@ -236,7 +263,7 @@
             // CB_Glossiness
             // 
             this.CB_Glossiness.AutoSize = true;
-            this.CB_Glossiness.Location = new System.Drawing.Point(123, 72);
+            this.CB_Glossiness.Location = new System.Drawing.Point(212, 188);
             this.CB_Glossiness.Name = "CB_Glossiness";
             this.CB_Glossiness.Size = new System.Drawing.Size(76, 17);
             this.CB_Glossiness.TabIndex = 12;
@@ -268,11 +295,138 @@
             this.CB_FileType.TabIndex = 5;
             this.CB_FileType.SelectedIndexChanged += new System.EventHandler(this.CB_FileType_SelectedIndexChanged);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // B_BaseColorPicker
+            // 
+            this.B_BaseColorPicker.Location = new System.Drawing.Point(3, 3);
+            this.B_BaseColorPicker.Name = "B_BaseColorPicker";
+            this.B_BaseColorPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_BaseColorPicker.TabIndex = 13;
+            this.B_BaseColorPicker.UseVisualStyleBackColor = true;
+            this.B_BaseColorPicker.Click += new System.EventHandler(this.B_BaseColorPicker_Click);
+            // 
+            // B_RoughnessPicker
+            // 
+            this.B_RoughnessPicker.Location = new System.Drawing.Point(3, 55);
+            this.B_RoughnessPicker.Name = "B_RoughnessPicker";
+            this.B_RoughnessPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_RoughnessPicker.TabIndex = 14;
+            this.B_RoughnessPicker.UseVisualStyleBackColor = true;
+            this.B_RoughnessPicker.Click += new System.EventHandler(this.B_RoughnessPicker_Click);
+            // 
+            // B_AmbientOcclusionPicker
+            // 
+            this.B_AmbientOcclusionPicker.Location = new System.Drawing.Point(3, 159);
+            this.B_AmbientOcclusionPicker.Name = "B_AmbientOcclusionPicker";
+            this.B_AmbientOcclusionPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_AmbientOcclusionPicker.TabIndex = 15;
+            this.B_AmbientOcclusionPicker.UseVisualStyleBackColor = true;
+            this.B_AmbientOcclusionPicker.Click += new System.EventHandler(this.B_AmbientOcclusionPicker_Click);
+            // 
+            // B_IORPicker
+            // 
+            this.B_IORPicker.Location = new System.Drawing.Point(123, 3);
+            this.B_IORPicker.Name = "B_IORPicker";
+            this.B_IORPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_IORPicker.TabIndex = 16;
+            this.B_IORPicker.UseVisualStyleBackColor = true;
+            this.B_IORPicker.Click += new System.EventHandler(this.B_IORPicker_Click);
+            // 
+            // B_MetallicPicker
+            // 
+            this.B_MetallicPicker.Location = new System.Drawing.Point(3, 107);
+            this.B_MetallicPicker.Name = "B_MetallicPicker";
+            this.B_MetallicPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_MetallicPicker.TabIndex = 17;
+            this.B_MetallicPicker.UseVisualStyleBackColor = true;
+            this.B_MetallicPicker.Click += new System.EventHandler(this.B_MetallicPicker_Click);
+            // 
+            // B_NormalPicker
+            // 
+            this.B_NormalPicker.Location = new System.Drawing.Point(123, 55);
+            this.B_NormalPicker.Name = "B_NormalPicker";
+            this.B_NormalPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_NormalPicker.TabIndex = 18;
+            this.B_NormalPicker.UseVisualStyleBackColor = true;
+            this.B_NormalPicker.Click += new System.EventHandler(this.B_NormalPicker_Click);
+            // 
+            // B_NormalDXPicker
+            // 
+            this.B_NormalDXPicker.Location = new System.Drawing.Point(123, 107);
+            this.B_NormalDXPicker.Name = "B_NormalDXPicker";
+            this.B_NormalDXPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_NormalDXPicker.TabIndex = 19;
+            this.B_NormalDXPicker.UseVisualStyleBackColor = true;
+            this.B_NormalDXPicker.Click += new System.EventHandler(this.B_NormalDXPicker_Click);
+            // 
+            // B_HeightPicker
+            // 
+            this.B_HeightPicker.Location = new System.Drawing.Point(123, 159);
+            this.B_HeightPicker.Name = "B_HeightPicker";
+            this.B_HeightPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_HeightPicker.TabIndex = 20;
+            this.B_HeightPicker.UseVisualStyleBackColor = true;
+            this.B_HeightPicker.Click += new System.EventHandler(this.B_HeightPicker_Click);
+            // 
+            // B_EmissivePicker
+            // 
+            this.B_EmissivePicker.Location = new System.Drawing.Point(212, 3);
+            this.B_EmissivePicker.Name = "B_EmissivePicker";
+            this.B_EmissivePicker.Size = new System.Drawing.Size(75, 23);
+            this.B_EmissivePicker.TabIndex = 21;
+            this.B_EmissivePicker.UseVisualStyleBackColor = true;
+            this.B_EmissivePicker.Click += new System.EventHandler(this.B_EmissivePicker_Click);
+            // 
+            // B_DiffusePicker
+            // 
+            this.B_DiffusePicker.Location = new System.Drawing.Point(212, 55);
+            this.B_DiffusePicker.Name = "B_DiffusePicker";
+            this.B_DiffusePicker.Size = new System.Drawing.Size(75, 23);
+            this.B_DiffusePicker.TabIndex = 22;
+            this.B_DiffusePicker.UseVisualStyleBackColor = true;
+            this.B_DiffusePicker.Click += new System.EventHandler(this.B_DiffusePicker_Click);
+            // 
+            // B_SpecularPicker
+            // 
+            this.B_SpecularPicker.Location = new System.Drawing.Point(212, 107);
+            this.B_SpecularPicker.Name = "B_SpecularPicker";
+            this.B_SpecularPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_SpecularPicker.TabIndex = 23;
+            this.B_SpecularPicker.UseVisualStyleBackColor = true;
+            this.B_SpecularPicker.Click += new System.EventHandler(this.B_SpecularPicker_Click);
+            // 
+            // B_GlossinessPicker
+            // 
+            this.B_GlossinessPicker.Location = new System.Drawing.Point(212, 159);
+            this.B_GlossinessPicker.Name = "B_GlossinessPicker";
+            this.B_GlossinessPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_GlossinessPicker.TabIndex = 24;
+            this.B_GlossinessPicker.UseVisualStyleBackColor = true;
+            this.B_GlossinessPicker.Click += new System.EventHandler(this.B_GlossinessPicker_Click);
+            // 
+            // B_ReflectionPicker
+            // 
+            this.B_ReflectionPicker.Location = new System.Drawing.Point(294, 3);
+            this.B_ReflectionPicker.Name = "B_ReflectionPicker";
+            this.B_ReflectionPicker.Size = new System.Drawing.Size(75, 23);
+            this.B_ReflectionPicker.TabIndex = 25;
+            this.B_ReflectionPicker.UseVisualStyleBackColor = true;
+            this.B_ReflectionPicker.Click += new System.EventHandler(this.B_ReflectionPicker_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.CB_FileType);
             this.Controls.Add(this.TxtBx_FileName);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -310,6 +464,20 @@
         private System.Windows.Forms.CheckBox CB_Glossiness;
         private System.Windows.Forms.TextBox TxtBx_FileName;
         private System.Windows.Forms.ComboBox CB_FileType;
+        private System.Windows.Forms.Button B_BaseColorPicker;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button B_RoughnessPicker;
+        private System.Windows.Forms.Button B_MetallicPicker;
+        private System.Windows.Forms.Button B_AmbientOcclusionPicker;
+        private System.Windows.Forms.Button B_IORPicker;
+        private System.Windows.Forms.Button B_NormalPicker;
+        private System.Windows.Forms.Button B_NormalDXPicker;
+        private System.Windows.Forms.Button B_HeightPicker;
+        private System.Windows.Forms.Button B_EmissivePicker;
+        private System.Windows.Forms.Button B_DiffusePicker;
+        private System.Windows.Forms.Button B_SpecularPicker;
+        private System.Windows.Forms.Button B_GlossinessPicker;
+        private System.Windows.Forms.Button B_ReflectionPicker;
     }
 }
 
