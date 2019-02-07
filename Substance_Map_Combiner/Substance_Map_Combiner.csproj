@@ -75,6 +75,7 @@
     <Compile Include="Main Window.Designer.cs">
       <DependentUpon>Main Window.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapTypes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflector.cs" />
