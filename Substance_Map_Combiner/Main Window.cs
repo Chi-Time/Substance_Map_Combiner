@@ -70,7 +70,6 @@ namespace Substance_Map_Combiner
 
             TxtBx_FileName.Text = _FileName;
             CB_FileType.Text = _FileType;
-            //CB_FileType.SelectedText = _FileType;
         }
 
         private void B_Source_Folder_Button_Click (object sender, EventArgs e)
@@ -103,35 +102,26 @@ namespace Substance_Map_Combiner
 
             if (_IsBaseColor)
             {
-                //TODO: Clean this up as it's ugly and could be more modular.
-                string[] baseColorImages = null;
-
-                foreach (string suffix in _BaseColorSuffixes)
-                {
-                    var iamges = GetFiles (suffix, files);
-
-                    if (iamges != null)
-                    {
-                        baseColorImages = iamges;
-                        break;
-                    }
-                }
+                string[] baseColorImages = GetFilesWithSuffix (_BaseColorSuffixes, files);
 
                 //TODO: Make it so that we add the suffix the user is using at the end of each map type. So don't just assume it's _Base_Color and make it the suffix of their choice.
                 ImageCombiner.CombineImages (baseColorImages[0], baseColorImages.ToArray (), _DestinationFolder, _FileName + "_Base_Color" + _FileType);
             }
         }
 
-        private string[] GetFiles (string fileSuffix, string[] files)
+        private string[] GetFilesWithSuffix (List<string> suffixes, string[] files)
         {
-            var images = new List<string> ();
+            foreach (string suffix in _BaseColorSuffixes)
+            {
+                var images = new List<string> ();
 
-            foreach (string file in files)
-                if (file.Contains (fileSuffix))
-                    images.Add (file);
+                foreach (string file in files)
+                    if (file.Contains (suffix))
+                        images.Add (file);
 
-            if (images.Count > 0)
-                return images.ToArray ();
+                if (images.Count > 0)
+                    return images.ToArray ();
+            }
 
             return null;
         }
