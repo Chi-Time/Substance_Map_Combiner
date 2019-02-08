@@ -29,13 +29,13 @@ namespace Substance_Map_Combiner
             }
         }
 
-        public static void CombineImages (string baseImage, string[] overlayImages, string outputPath, string outputName, Color color)
+        public static void CombineImages (string baseImage, string[] overlayImages, string outputPath, string outputName, Color backgroundColor)
         {
             using (var imageFactor = new ImageFactory (preserveExifData: true))
             {
                 var imageLayer = new ImageLayer ();
                 var loadedImage = imageFactor.Load (baseImage);
-                loadedImage.BackgroundColor (color);
+                loadedImage.BackgroundColor (backgroundColor);
 
                 for (int i = 0; i < overlayImages.Length; i++)
                 {

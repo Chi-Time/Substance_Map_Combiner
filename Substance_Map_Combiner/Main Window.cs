@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace Substance_Map_Combiner
 {
@@ -17,87 +18,148 @@ namespace Substance_Map_Combiner
         private string _FileType = ".png";
         private string _SourceFolder = @"J:\Substance Painter Files\Substance Exports\Giant Mech\Giant Mech Maps\Giant Mech Body";
         private string _DestinationFolder = @"J:\Substance Painter Files\Substance Exports\Giant Mech\Giant Mech Maps\Test";
-        private List<string> _OverlayImages = new List<string> ();
+        private string _PreferenceFileLocation = "Preferences.pref";
+        private UserPreferences _UserPreferences = null;
 
-        private List<string> _BaseColorSuffixes = new List<string> ();
-        private List<string> _RoughnessSuffixes = new List<string> ();
-        private List<string> _MetallicSuffixes = new List<string> ();
-        private List<string> _AmbientOcclusionSuffixes = new List<string> ();
-        private List<string> _IORSuffixes = new List<string> ();
-        private List<string> _NormalSuffixes = new List<string> ();
-        private List<string> _NormalDXSuffixes = new List<string> ();
-        private List<string> _HeightSuffixes = new List<string> ();
-        private List<string> _EmissiveSuffixes = new List<string> ();
-        private List<string> _ReflectionSuffixes = new List<string> ();
-        private List<string> _DiffuseSuffixes = new List<string> ();
-        private List<string> _SpecularSuffixes = new List<string> ();
-        private List<string> _GlossinessSuffixes = new List<string> ();
+        //private Map _BaseColor = new Map ();
+        //private Map _Roughness = new Map ();
+        //private Map _Metallic = new Map ();
+        //private Map _AmbientOcclusion = new Map ();
+        //private Map _IOR = new Map ();
+        //private Map _Normal = new Map ();
+        //private Map _NormalDX = new Map ();
+        //private Map _Height = new Map ();
+        //private Map _Emissive = new Map ();
+        //private Map _Reflection = new Map ();
+        //private Map _Diffuse = new Map ();
+        //private Map _Specular = new Map ();
+        //private Map _Glossiness = new Map ();
 
-        private Color _BaseColorBackground = Color.WhiteSmoke;
-        private Color _RoughnessBackground = Color.DarkGray;
-        private Color _MetallicBackground = Color.DimGray;
-        private Color _AmbientOcclusionBackground = Color.White;
-        private Color _IORBackground = Color.WhiteSmoke;
-        private Color _NormalBackground = Color.FromArgb (128, 128, 255);
-        private Color _NormalDXBackground = Color.FromArgb (128, 128, 255);
-        private Color _HeightBackground = Color.DarkGray;
-        private Color _EmissiveBackground = Color.WhiteSmoke;
-        private Color _ReflectionBackground = Color.WhiteSmoke;
-        private Color _DiffuseBackground = Color.WhiteSmoke;
-        private Color _SpecularBackground = Color.WhiteSmoke;
-        private Color _GlossinessBackground = Color.WhiteSmoke;
-
-        private bool _IsBaseColor = false;
-        private bool _IsRoughness = false;
-        private bool _IsMetallic = false;
-        private bool _IsAmbient_Occlusion = false;
-        private bool _IsIOR = false;
-        private bool _IsNormal = false;
-        private bool _IsNormalDX = false;
-        private bool _IsHeight = false;
-        private bool _IsEmissive = false;
-        private bool _IsReflection = false;
-        private bool _IsDiffuse = false;
-        private bool _IsSpecular = false;
-        private bool _IsGlossiness = false;
+        private Dictionary<MapTypes, Map> _Maps = new Dictionary<MapTypes, Map> ();
 
         public MainWindow ()
         {
             InitializeComponent ();
+
+            if (!File.Exists (_PreferenceFileLocation))
+            {
+                InitialiseDefaultPreferences ();
+            }
+            else
+            {
+                string json = File.ReadAllText (_PreferenceFileLocation);
+                _UserPreferences = JsonConvert.DeserializeObject<UserPreferences> (json);
+
+                if (_UserPreferences != null)
+                {
+                    _Maps = _UserPreferences.Maps;
+                }
+            }
+        }
+
+        private void InitialiseDefaultPreferences ()
+        {
+            /*
+            _BaseColor.Suffixes.Add ("_Base_Color");
+            _Roughness.Suffixes.Add ("_Roughness");
+            _Metallic.Suffixes.Add ("_Metallic");
+            _AmbientOcclusion.Suffixes.Add ("_Ambient_occlusion");
+            _IOR.Suffixes.Add ("_IOR");
+            _Normal.Suffixes.Add ("_Normal");
+            _NormalDX.Suffixes.Add ("_NormalDX");
+            _Height.Suffixes.Add ("_Height");
+            _Emissive.Suffixes.Add ("_Emissive");
+            _Reflection.Suffixes.Add ("_Reflections");
+            _Diffuse.Suffixes.Add ("_Diffuse");
+            _Specular.Suffixes.Add ("_Specular");
+            _Glossiness.Suffixes.Add ("_Glossiness");
+
+            _BaseColor.OutputSuffix = ("_Base_Color");
+            _Roughness.OutputSuffix = ("_Roughness");
+            _Metallic.OutputSuffix = ("_Metallic");
+            _AmbientOcclusion.OutputSuffix = ("_Ambient_occlusion");
+            _IOR.OutputSuffix = ("_IOR");
+            _Normal.OutputSuffix = ("_Normal");
+            _NormalDX.OutputSuffix = ("_NormalDX");
+            _Height.OutputSuffix = ("_Height");
+            _Emissive.OutputSuffix = ("_Emissive");
+            _Reflection.OutputSuffix = ("_Reflections");
+            _Diffuse.OutputSuffix = ("_Diffuse");
+            _Specular.OutputSuffix = ("_Specular");
+            _Glossiness.OutputSuffix = ("_Glossiness");
+
+            _BaseColor.BackgroundColor = Color.WhiteSmoke;
+            _Roughness.BackgroundColor = Color.DarkGray;
+            _Metallic.BackgroundColor = Color.DimGray;
+            _AmbientOcclusion.BackgroundColor = Color.White;
+            _IOR.BackgroundColor = Color.WhiteSmoke;
+            _Normal.BackgroundColor = Color.FromArgb (128, 128, 255);
+            _NormalDX.BackgroundColor = Color.FromArgb (128, 128, 255);
+            _Height.BackgroundColor = Color.DarkGray;
+            _Emissive.BackgroundColor = Color.WhiteSmoke;
+            _Reflection.BackgroundColor = Color.WhiteSmoke;
+            _Diffuse.BackgroundColor = Color.WhiteSmoke;
+            _Specular.BackgroundColor = Color.WhiteSmoke;
+            _Glossiness.BackgroundColor = Color.WhiteSmoke;*/
+
+            AddNewMap (MapTypes.Base_Color, "_Base_Color", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Roughness, "_Roughness", Color.DarkGray);
+            AddNewMap (MapTypes.Metallic, "_Metallic", Color.DimGray);
+            AddNewMap (MapTypes.AO, "_Ambient_occlusion", Color.White);
+            AddNewMap (MapTypes.IOR, "_IOR", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Normal, "_Normal", Color.FromArgb (128, 128, 255));
+            AddNewMap (MapTypes.NormalDX, "_NormalDX", Color.FromArgb (128, 128, 255));
+            AddNewMap (MapTypes.Height, "_Height", Color.DarkGray);
+            AddNewMap (MapTypes.Emissive, "_Emissive", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Reflection, "_Reflection", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Diffuse, "_Diffuse", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Specular, "_Specular", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Glossiness, "_Glossiness", Color.WhiteSmoke);
+
+            _UserPreferences = new UserPreferences
+            {
+                Maps = _Maps
+            };
+        }
+
+        private void AddNewMap (MapTypes mapType, string suffix, Color color)
+        {
+            _Maps.Add (mapType, new Map ());
+            _Maps[mapType].Suffixes.Add (suffix);
+            _Maps[mapType].DefaultSuffix = suffix;
+            _Maps[mapType].OutputSuffix = (suffix);
+            _Maps[mapType].BackgroundColor = color;
+            _Maps[mapType].DefaultBackgroundColor = color;
         }
 
         private void Main_Window_Load (object sender, EventArgs e)
         {
-            _BaseColorSuffixes.Add ("_Base_Color");
-            _RoughnessSuffixes.Add ("_Roughness");
-            _MetallicSuffixes.Add ("_Metallic");
-            _AmbientOcclusionSuffixes.Add ("_Ambient_occlusion");
-            _IORSuffixes.Add ("_IOR");
-            _NormalSuffixes.Add ("_Normal");
-            _NormalDXSuffixes.Add ("_NormalDX");
-            _HeightSuffixes.Add ("_Height");
-            _EmissiveSuffixes.Add ("_Emissive");
-            _ReflectionSuffixes.Add ("_Reflections");
-            _DiffuseSuffixes.Add ("_Diffuse");
-            _SpecularSuffixes.Add ("_Specular");
-            _GlossinessSuffixes.Add ("_Glossiness");
+            InitialiseInterface ();
+        }
+
+        private void InitialiseInterface ()
+        {
+            UpdateButton (B_BaseColorPicker, MapTypes.Base_Color);
+            UpdateButton (B_RoughnessPicker, MapTypes.Roughness);
+            UpdateButton (B_MetallicPicker, MapTypes.Metallic);
+            UpdateButton (B_AmbientOcclusionPicker, MapTypes.AO);
+            UpdateButton (B_IORPicker, MapTypes.IOR);
+            UpdateButton (B_NormalPicker, MapTypes.Normal);
+            UpdateButton (B_NormalDXPicker, MapTypes.NormalDX);
+            UpdateButton (B_HeightPicker, MapTypes.Height);
+            UpdateButton (B_EmissivePicker, MapTypes.Emissive);
+            UpdateButton (B_ReflectionPicker, MapTypes.Reflection);
+            UpdateButton (B_DiffusePicker, MapTypes.Diffuse);
+            UpdateButton (B_SpecularPicker, MapTypes.Specular);
+            UpdateButton (B_GlossinessPicker, MapTypes.Glossiness);
 
             TxtBx_FileName.Text = _FileName;
             CB_FileType.Text = _FileType;
+        }
 
-            B_BaseColorPicker.BackColor = _BaseColorBackground;
-            B_RoughnessPicker.BackColor = _RoughnessBackground;
-            B_MetallicPicker.BackColor = _MetallicBackground;
-            B_AmbientOcclusionPicker.BackColor = _AmbientOcclusionBackground;
-            B_IORPicker.BackColor = _IORBackground;
-            B_NormalPicker.BackColor = _NormalBackground;
-            B_NormalDXPicker.BackColor = _NormalDXBackground;
-            B_HeightPicker.BackColor = _HeightBackground;
-            B_EmissivePicker.BackColor = _EmissiveBackground;
-            B_ReflectionPicker.BackColor = _ReflectionBackground;
-            B_DiffusePicker.BackColor = _DiffuseBackground;
-            B_SpecularPicker.BackColor = _SpecularBackground;
-            B_GlossinessPicker.BackColor = _GlossinessBackground;
+        private void UpdateButton (Button button, MapTypes mapType)
+        {
+            button.BackColor = _Maps[mapType].BackgroundColor;
         }
 
         private void B_Source_Folder_Button_Click (object sender, EventArgs e)
@@ -128,71 +190,23 @@ namespace Substance_Map_Combiner
                 .Where (file => extensions.Any (file.ToLower ().EndsWith))
                 .ToArray ();
 
-            if (_IsBaseColor)
+            foreach (KeyValuePair<MapTypes, Map> map in _Maps)
             {
-                //TODO: Make it so that we add the suffix the user is using at the end of each map type. So don't just assume it's _Base_Color and make it the suffix of their choice.
-                CreateMap (_BaseColorSuffixes, files, "_Base_Color", _BaseColorBackground);
-            }
-            if (_IsRoughness)
-            {
-                CreateMap (_RoughnessSuffixes, files, "_Roughness", _RoughnessBackground);
-
-                Console.WriteLine ("Roughness Pass");
-            }
-            if (_IsMetallic)
-            {
-                CreateMap (_MetallicSuffixes, files, "_Metallic", _MetallicBackground);
-            }
-            if (_IsAmbient_Occlusion)
-            {
-                CreateMap (_AmbientOcclusionSuffixes, files, "_Ambient_occlusion", _AmbientOcclusionBackground);
-            }
-            if (_IsIOR)
-            {
-                CreateMap (_IORSuffixes, files, "_IOR", _IORBackground);
-            }
-            if (_IsNormal)
-            {
-                CreateMap (_NormalSuffixes, files, "_Normal", _NormalBackground);
-            }
-            if (_IsNormalDX)
-            {
-                CreateMap (_NormalDXSuffixes, files, "_NormalDX", _NormalDXBackground);
-            }
-            if (_IsHeight)
-            {
-                CreateMap (_HeightSuffixes, files, "_Height", _HeightBackground);
-            }
-            if (_IsEmissive)
-            {
-                CreateMap (_EmissiveSuffixes, files, "_Emissive", _EmissiveBackground);
-            }
-            if (_IsReflection)
-            {
-                CreateMap (_ReflectionSuffixes, files, "_Reflection", _ReflectionBackground);
-            }
-            if (_IsDiffuse)
-            {
-                CreateMap (_DiffuseSuffixes, files, "_Diffuse", _DiffuseBackground);
-            }
-            if (_IsSpecular)
-            {
-                CreateMap (_SpecularSuffixes, files, "_Specular", _SpecularBackground);
-            }
-            if (_IsGlossiness)
-            {
-                CreateMap (_GlossinessSuffixes, files, "_Glossiness", _GlossinessBackground);
+                if (map.Value.IsSelected)
+                {
+                    CreateMap (map.Value, files);
+                }
             }
         }
 
-        private void CreateMap (List<string> suffixes, string[] files, string mapType, Color color)
+        private void CreateMap (Map map, string[] files)
         {
-            string[] images = GetFilesWithSuffix (suffixes, files);
-            string mapName = _FileName + mapType + _FileType;
+            string[] images = GetFilesWithSuffix (map.Suffixes, files);
+            string mapName = _FileName + map.OutputSuffix + _FileType;
 
             if (images != null)
             {
-                ImageCombiner.CombineImages (images[0], images.ToArray (), _DestinationFolder, mapName, color);
+                ImageCombiner.CombineImages (images[0], images.ToArray (), _DestinationFolder, mapName, map.BackgroundColor);
 
                 return;
             }
@@ -217,12 +231,12 @@ namespace Substance_Map_Combiner
 
         #region Checkboxes
 
-        private void checkBox1_CheckedChanged (object sender, EventArgs e)
+        private void CB_Base_Color_CheckedChanged (object sender, EventArgs e)
         {
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsBaseColor = checkBox.Checked;
+                    _Maps[MapTypes.Base_Color].IsSelected = checkBox.Checked;
             }
         }
 
@@ -231,7 +245,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsRoughness = checkBox.Checked;
+                    _Maps[MapTypes.Roughness].IsSelected = checkBox.Checked;
             }
         }
 
@@ -240,7 +254,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsMetallic = checkBox.Checked;
+                    _Maps[MapTypes.Metallic].IsSelected = checkBox.Checked;
             }
         }
 
@@ -249,7 +263,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsAmbient_Occlusion = checkBox.Checked;
+                    _Maps[MapTypes.AO].IsSelected = checkBox.Checked;
             }
         }
 
@@ -258,7 +272,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsIOR = checkBox.Checked;
+                    _Maps[MapTypes.IOR].IsSelected = checkBox.Checked;
             }
         }
 
@@ -267,7 +281,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsNormal = checkBox.Checked;
+                    _Maps[MapTypes.Normal].IsSelected = checkBox.Checked;
             }
         }
 
@@ -276,7 +290,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsNormalDX = checkBox.Checked;
+                    _Maps[MapTypes.NormalDX].IsSelected = checkBox.Checked;
             }
         }
 
@@ -285,7 +299,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsHeight = checkBox.Checked;
+                    _Maps[MapTypes.Height].IsSelected = checkBox.Checked;
             }
         }
 
@@ -294,7 +308,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsEmissive = checkBox.Checked;
+                    _Maps[MapTypes.Emissive].IsSelected = checkBox.Checked;
             }
         }
 
@@ -303,7 +317,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsReflection = checkBox.Checked;
+                    _Maps[MapTypes.Reflection].IsSelected = checkBox.Checked;
             }
         }
 
@@ -312,7 +326,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsDiffuse = checkBox.Checked;
+                    _Maps[MapTypes.Diffuse].IsSelected = checkBox.Checked;
             }
         }
 
@@ -321,7 +335,7 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsSpecular = checkBox.Checked;
+                    _Maps[MapTypes.Specular].IsSelected = checkBox.Checked;
             }
         }
 
@@ -330,12 +344,12 @@ namespace Substance_Map_Combiner
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _IsGlossiness = checkBox.Checked;
+                    _Maps[MapTypes.Glossiness].IsSelected = checkBox.Checked;
             }
         }
 
         #endregion
-
+        
         private void TxtBx_FileName_TextChanged (object sender, EventArgs e)
         {
             if (sender is TextBox textBox)
@@ -352,9 +366,9 @@ namespace Substance_Map_Combiner
                 if (comboBox != null)
                     _FileType = comboBox.Text;
             }
-
-            Console.WriteLine (_FileType);
         }
+
+        #region Color Boxes
 
         private void B_BaseColorPicker_Click (object sender, EventArgs e)
         {
@@ -362,7 +376,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _BaseColorBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Base_Color].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -373,7 +387,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _RoughnessBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Roughness].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -384,7 +398,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _MetallicBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Metallic].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -395,7 +409,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _AmbientOcclusionBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.AO].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -406,7 +420,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _IORBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.IOR].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -417,7 +431,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _NormalBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Normal].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -428,7 +442,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _NormalDXBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.NormalDX].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -439,7 +453,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _HeightBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Height].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -450,7 +464,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _EmissiveBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Emissive].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -461,7 +475,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _DiffuseBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Diffuse].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -472,7 +486,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _SpecularBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Specular].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -483,7 +497,7 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _GlossinessBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Glossiness].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -494,10 +508,12 @@ namespace Substance_Map_Combiner
             {
                 if (button != null)
                 {
-                    _ReflectionBackground = GetBackgroundColor (button);
+                    _Maps[MapTypes.Reflection].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
+
+        #endregion
 
         private Color GetBackgroundColor (Button button)
         {
@@ -506,6 +522,7 @@ namespace Substance_Map_Combiner
                 AllowFullOpen = true,
                 SolidColorOnly = false,
                 ShowHelp = true,
+                AnyColor = true,
                 Color = button.BackColor
             };
 
@@ -516,6 +533,31 @@ namespace Substance_Map_Combiner
             }
 
             return button.BackColor;
+        }
+
+        private void TSMI_Preferences_Click (object sender, EventArgs e)
+        {
+            var preferenceWindow = new Preferences_Window (_UserPreferences);
+
+            preferenceWindow.Show ();
+        }
+
+        private void MainWindow_FormClosing (object sender, FormClosingEventArgs e)
+        {
+            var json = UserPreferences.GetJSON (_UserPreferences);
+            File.WriteAllText (_PreferenceFileLocation, json);
+        }
+
+        private void B_BaseColorPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Base_Color);
+                map.BackgroundColor = map.DefaultBackgroundColor;
+
+                if (sender is Button button)
+                    button.BackColor = map.DefaultBackgroundColor;
+            }
         }
     }
 }

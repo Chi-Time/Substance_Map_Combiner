@@ -11,7 +11,7 @@ namespace Substance_Map_Combiner
         Base_Color = 0,
         Roughness,
         Metallic,
-        Ambient_Occlusion,
+        AO,
         IOR,
         Normal,
         NormalDX,
