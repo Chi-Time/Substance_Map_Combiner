@@ -21,20 +21,6 @@ namespace Substance_Map_Combiner
         private string _PreferenceFileLocation = "Preferences.pref";
         private UserPreferences _UserPreferences = null;
 
-        //private Map _BaseColor = new Map ();
-        //private Map _Roughness = new Map ();
-        //private Map _Metallic = new Map ();
-        //private Map _AmbientOcclusion = new Map ();
-        //private Map _IOR = new Map ();
-        //private Map _Normal = new Map ();
-        //private Map _NormalDX = new Map ();
-        //private Map _Height = new Map ();
-        //private Map _Emissive = new Map ();
-        //private Map _Reflection = new Map ();
-        //private Map _Diffuse = new Map ();
-        //private Map _Specular = new Map ();
-        //private Map _Glossiness = new Map ();
-
         private Dictionary<MapTypes, Map> _Maps = new Dictionary<MapTypes, Map> ();
 
         public MainWindow ()
@@ -59,49 +45,6 @@ namespace Substance_Map_Combiner
 
         private void InitialiseDefaultPreferences ()
         {
-            /*
-            _BaseColor.Suffixes.Add ("_Base_Color");
-            _Roughness.Suffixes.Add ("_Roughness");
-            _Metallic.Suffixes.Add ("_Metallic");
-            _AmbientOcclusion.Suffixes.Add ("_Ambient_occlusion");
-            _IOR.Suffixes.Add ("_IOR");
-            _Normal.Suffixes.Add ("_Normal");
-            _NormalDX.Suffixes.Add ("_NormalDX");
-            _Height.Suffixes.Add ("_Height");
-            _Emissive.Suffixes.Add ("_Emissive");
-            _Reflection.Suffixes.Add ("_Reflections");
-            _Diffuse.Suffixes.Add ("_Diffuse");
-            _Specular.Suffixes.Add ("_Specular");
-            _Glossiness.Suffixes.Add ("_Glossiness");
-
-            _BaseColor.OutputSuffix = ("_Base_Color");
-            _Roughness.OutputSuffix = ("_Roughness");
-            _Metallic.OutputSuffix = ("_Metallic");
-            _AmbientOcclusion.OutputSuffix = ("_Ambient_occlusion");
-            _IOR.OutputSuffix = ("_IOR");
-            _Normal.OutputSuffix = ("_Normal");
-            _NormalDX.OutputSuffix = ("_NormalDX");
-            _Height.OutputSuffix = ("_Height");
-            _Emissive.OutputSuffix = ("_Emissive");
-            _Reflection.OutputSuffix = ("_Reflections");
-            _Diffuse.OutputSuffix = ("_Diffuse");
-            _Specular.OutputSuffix = ("_Specular");
-            _Glossiness.OutputSuffix = ("_Glossiness");
-
-            _BaseColor.BackgroundColor = Color.WhiteSmoke;
-            _Roughness.BackgroundColor = Color.DarkGray;
-            _Metallic.BackgroundColor = Color.DimGray;
-            _AmbientOcclusion.BackgroundColor = Color.White;
-            _IOR.BackgroundColor = Color.WhiteSmoke;
-            _Normal.BackgroundColor = Color.FromArgb (128, 128, 255);
-            _NormalDX.BackgroundColor = Color.FromArgb (128, 128, 255);
-            _Height.BackgroundColor = Color.DarkGray;
-            _Emissive.BackgroundColor = Color.WhiteSmoke;
-            _Reflection.BackgroundColor = Color.WhiteSmoke;
-            _Diffuse.BackgroundColor = Color.WhiteSmoke;
-            _Specular.BackgroundColor = Color.WhiteSmoke;
-            _Glossiness.BackgroundColor = Color.WhiteSmoke;*/
-
             AddNewMap (MapTypes.Base_Color, "_Base_Color", Color.WhiteSmoke);
             AddNewMap (MapTypes.Roughness, "_Roughness", Color.DarkGray);
             AddNewMap (MapTypes.Metallic, "_Metallic", Color.DimGray);
@@ -548,15 +491,126 @@ namespace Substance_Map_Combiner
             File.WriteAllText (_PreferenceFileLocation, json);
         }
 
+        private void ResetColorToDefault (Button button, Map map)
+        {
+            map.BackgroundColor = map.DefaultBackgroundColor;
+            button.BackColor = map.DefaultBackgroundColor;
+        }
+
         private void B_BaseColorPicker_MouseDown (object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 var map = _UserPreferences.GetMap (MapTypes.Base_Color);
-                map.BackgroundColor = map.DefaultBackgroundColor;
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
 
-                if (sender is Button button)
-                    button.BackColor = map.DefaultBackgroundColor;
+        private void B_RoughnessPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Roughness);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_MetallicPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Metallic);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_AmbientOcclusionPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.AO);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_IORPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.IOR);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_NormalPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Normal);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_NormalDXPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.NormalDX);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_HeightPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Height);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_EmissivePicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Emissive);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_DiffusePicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Diffuse);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_SpecularPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Specular);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_GlossinessPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Glossiness);
+                ResetColorToDefault (sender as Button, map);
+            }
+        }
+
+        private void B_ReflectionPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var map = _UserPreferences.GetMap (MapTypes.Reflection);
+                ResetColorToDefault (sender as Button, map);
             }
         }
     }

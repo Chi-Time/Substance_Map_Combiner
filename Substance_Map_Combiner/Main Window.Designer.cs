@@ -164,6 +164,7 @@
             this.B_RoughnessPicker.TabIndex = 14;
             this.B_RoughnessPicker.UseVisualStyleBackColor = true;
             this.B_RoughnessPicker.Click += new System.EventHandler(this.B_RoughnessPicker_Click);
+            this.B_RoughnessPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_RoughnessPicker_MouseDown);
             // 
             // CB_Roughness
             // 
@@ -184,6 +185,7 @@
             this.B_MetallicPicker.TabIndex = 17;
             this.B_MetallicPicker.UseVisualStyleBackColor = true;
             this.B_MetallicPicker.Click += new System.EventHandler(this.B_MetallicPicker_Click);
+            this.B_MetallicPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_MetallicPicker_MouseDown);
             // 
             // CB_Metallic
             // 
@@ -204,6 +206,7 @@
             this.B_AmbientOcclusionPicker.TabIndex = 15;
             this.B_AmbientOcclusionPicker.UseVisualStyleBackColor = true;
             this.B_AmbientOcclusionPicker.Click += new System.EventHandler(this.B_AmbientOcclusionPicker_Click);
+            this.B_AmbientOcclusionPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_AmbientOcclusionPicker_MouseDown);
             // 
             // CB_Ambient_Occlusion
             // 
@@ -224,6 +227,7 @@
             this.B_IORPicker.TabIndex = 16;
             this.B_IORPicker.UseVisualStyleBackColor = true;
             this.B_IORPicker.Click += new System.EventHandler(this.B_IORPicker_Click);
+            this.B_IORPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_IORPicker_MouseDown);
             // 
             // CB_IOR
             // 
@@ -244,6 +248,7 @@
             this.B_NormalPicker.TabIndex = 18;
             this.B_NormalPicker.UseVisualStyleBackColor = true;
             this.B_NormalPicker.Click += new System.EventHandler(this.B_NormalPicker_Click);
+            this.B_NormalPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_NormalPicker_MouseDown);
             // 
             // CB_Normal
             // 
@@ -264,6 +269,7 @@
             this.B_NormalDXPicker.TabIndex = 19;
             this.B_NormalDXPicker.UseVisualStyleBackColor = true;
             this.B_NormalDXPicker.Click += new System.EventHandler(this.B_NormalDXPicker_Click);
+            this.B_NormalDXPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_NormalDXPicker_MouseDown);
             // 
             // CB_NormalDX
             // 
@@ -284,6 +290,7 @@
             this.B_HeightPicker.TabIndex = 20;
             this.B_HeightPicker.UseVisualStyleBackColor = true;
             this.B_HeightPicker.Click += new System.EventHandler(this.B_HeightPicker_Click);
+            this.B_HeightPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_HeightPicker_MouseDown);
             // 
             // CB_Height
             // 
@@ -304,6 +311,7 @@
             this.B_EmissivePicker.TabIndex = 21;
             this.B_EmissivePicker.UseVisualStyleBackColor = true;
             this.B_EmissivePicker.Click += new System.EventHandler(this.B_EmissivePicker_Click);
+            this.B_EmissivePicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_EmissivePicker_MouseDown);
             // 
             // CB_Emissive
             // 
@@ -324,6 +332,7 @@
             this.B_DiffusePicker.TabIndex = 22;
             this.B_DiffusePicker.UseVisualStyleBackColor = true;
             this.B_DiffusePicker.Click += new System.EventHandler(this.B_DiffusePicker_Click);
+            this.B_DiffusePicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_DiffusePicker_MouseDown);
             // 
             // CB_Diffuse
             // 
@@ -344,6 +353,7 @@
             this.B_SpecularPicker.TabIndex = 23;
             this.B_SpecularPicker.UseVisualStyleBackColor = true;
             this.B_SpecularPicker.Click += new System.EventHandler(this.B_SpecularPicker_Click);
+            this.B_SpecularPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_SpecularPicker_MouseDown);
             // 
             // CB_Specular
             // 
@@ -364,6 +374,7 @@
             this.B_GlossinessPicker.TabIndex = 24;
             this.B_GlossinessPicker.UseVisualStyleBackColor = true;
             this.B_GlossinessPicker.Click += new System.EventHandler(this.B_GlossinessPicker_Click);
+            this.B_GlossinessPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_GlossinessPicker_MouseDown);
             // 
             // CB_Glossiness
             // 
@@ -384,6 +395,7 @@
             this.B_ReflectionPicker.TabIndex = 25;
             this.B_ReflectionPicker.UseVisualStyleBackColor = true;
             this.B_ReflectionPicker.Click += new System.EventHandler(this.B_ReflectionPicker_Click);
+            this.B_ReflectionPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_ReflectionPicker_MouseDown);
             // 
             // CB_Reflection
             // 
