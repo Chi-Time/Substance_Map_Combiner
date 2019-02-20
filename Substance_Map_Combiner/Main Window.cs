@@ -120,17 +120,18 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
+                _SourceFolder = fileDialog.FileName;
+
                 if (FolderIsEmpty ())
                 {
                     string caption = "No Images found!";
-                    string message = "There are no compatible images within the folder to combine. Please select a folder with compatible images.";
+                    string message = "There are no compatible images within the folder to combine. Please select a folder with compatible images or add new file suffixes through the preferences menu.";
                     
                     MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
                 {
-                    _SourceFolder = fileDialog.FileName;
                     CheckFolderFiles ();
                 }
             }
@@ -221,7 +222,7 @@ namespace Substance_Map_Combiner
         {
             string[] files = GetFiles ();
 
-            if (files == null)
+            if (files.Length == 0)
                 return;
 
             foreach (KeyValuePair<MapTypes, Map> map in _Maps)
@@ -241,17 +242,12 @@ namespace Substance_Map_Combiner
         {
             string[] extensions = new[] { ".jpeg", ".jpg", ".png", ".tga", ".tiff" };
 
-            if (extensions != null)
-            {
-                string[] files = Directory
+            string[] files = Directory
                 .GetFiles (_SourceFolder)
                 .Where (file => extensions.Any (file.ToLower ().EndsWith))
                 .ToArray ();
 
-                return files;
-            }
-
-            return null;
+            return files;
         }
 
         private void CreateCombinedImageMap (Map map, string[] files)
