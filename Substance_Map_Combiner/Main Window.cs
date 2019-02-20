@@ -14,8 +14,6 @@ namespace Substance_Map_Combiner
 {
     public partial class MainWindow : Form
     {
-        private string _FileName = "Combined";
-        private string _FileType = ".png";
         private string _SourceFolder = @"J:\Substance Painter Files\Substance Exports\Giant Mech\Giant Mech Maps\Giant Mech Body";
         private string _DestinationFolder = @"J:\Substance Painter Files\Substance Exports\Giant Mech\Giant Mech Maps\Test";
         private string _PreferenceFileLocation = "Preferences.pref";
@@ -96,8 +94,8 @@ namespace Substance_Map_Combiner
             UpdateButton (B_SpecularPicker, MapTypes.Specular);
             UpdateButton (B_GlossinessPicker, MapTypes.Glossiness);
 
-            TxtBx_FileName.Text = _FileName;
-            CB_FileType.Text = _FileType;
+            TxtBx_FileName.Text = _UserPreferences.ExportFileName;
+            CB_FileType.Text = _UserPreferences.ExportFileType;
         }
 
         private void UpdateButton (Button button, MapTypes mapType)
@@ -145,7 +143,7 @@ namespace Substance_Map_Combiner
         private void CreateMap (Map map, string[] files)
         {
             string[] images = GetFilesWithSuffix (map.Suffixes, files);
-            string mapName = _FileName + map.OutputSuffix + _FileType;
+            string mapName = _UserPreferences.ExportFileName + map.OutputSuffix + _UserPreferences.ExportFileType;
 
             if (images != null)
             {
@@ -298,7 +296,7 @@ namespace Substance_Map_Combiner
             if (sender is TextBox textBox)
             {
                 if (textBox != null)
-                    _FileName = textBox.Text;
+                    _UserPreferences.ExportFileName = textBox.Text;
             }
         }
 
@@ -307,7 +305,7 @@ namespace Substance_Map_Combiner
             if (sender is ComboBox comboBox)
             {
                 if (comboBox != null)
-                    _FileType = comboBox.Text;
+                    _UserPreferences.ExportFileType = comboBox.Text;
             }
         }
 

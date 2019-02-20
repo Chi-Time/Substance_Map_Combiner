@@ -10,6 +10,7 @@ namespace Substance_Map_Combiner
 {
     public class UserPreferences
     {
+        public string ExportFileName = "Combined";
         public string ExportFileType = ".png";
         public Dictionary<MapTypes, Map> Maps;
 
