@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-//TODO: Make a progress log or a simple text that informs the user when starting map combining and when it's over.
 //TODO: Find a way to possibly make map combining non-locking through async.
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
 //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
@@ -112,7 +111,10 @@ namespace Substance_Map_Combiner
 
         private void B_Source_Folder_Button_Click (object sender, EventArgs e)
         {
-            var fileDialog = new FolderSelectDialog ();
+            var fileDialog = new FolderSelectDialog ()
+            {
+                InitialDirectory = _UserPreferences.SourceFolder
+            };
 
             if (fileDialog.ShowDialog ())
             {
@@ -189,7 +191,10 @@ namespace Substance_Map_Combiner
 
         private void B_Destination_Folder_Click (object sender, EventArgs e)
         {
-            var fileDialog = new FolderSelectDialog ();
+            var fileDialog = new FolderSelectDialog ()
+            {
+                InitialDirectory = _UserPreferences.DestinationFolder
+            };
 
             if (fileDialog.ShowDialog ())
             {
@@ -217,6 +222,7 @@ namespace Substance_Map_Combiner
                 return;
             }
 
+            this.Opacity = 0.75d;
             CombineImages ();
         }
 
@@ -234,6 +240,8 @@ namespace Substance_Map_Combiner
                     CreateCombinedImageMap (map.Value, files);
                 }
             }
+
+            this.Opacity = 1d;
         }
 
         /// <summary>
