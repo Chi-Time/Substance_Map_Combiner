@@ -157,7 +157,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Preferences_Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Preferences Window";
+            this.Text = "Preferences";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Preferences_Window_FormClosing);
             this.Load += new System.EventHandler(this.Preferences_Window_Load);
             this.ResumeLayout(false);
