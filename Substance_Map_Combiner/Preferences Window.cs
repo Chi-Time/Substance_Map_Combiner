@@ -72,7 +72,7 @@ namespace Substance_Map_Combiner
             {
                 if (comboBox != null)
                 {
-                    var text = comboBox.Text;
+                    string text = comboBox.Text;
 
                     if (IsSuffixType (text, "Base Color"))
                     {

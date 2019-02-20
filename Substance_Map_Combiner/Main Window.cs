@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 //TODO: Make it so that source and destination folder save where they last where when they've been used.
 //TODO: Make a progress log or a simple text that informs the user when starting map combining and when it's over.
 //TODO: Find a way to possibly make map combining non-locking through async.
-//TODO: Make it so that if the user selects a source folder with no files a warning pop's up telling them so.
+//TODO: Make it so that if the user tries to combine where there is no source or destination folder selected the program doesn't just freeze.
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
 //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
 
@@ -21,8 +21,8 @@ namespace Substance_Map_Combiner
 {
     public partial class MainWindow : Form
     {
-        private string _SourceFolder = @"J:\Substance Painter Files\Substance Exports\Giant Mech\Giant Mech Maps\Giant Mech Body";
-        private string _DestinationFolder = @"J:\Substance Painter Files\Substance Exports\Giant Mech\Giant Mech Maps\Test";
+        private string _SourceFolder = @"";
+        private string _DestinationFolder = @"";
         private string _PreferenceFileLocation = "Preferences.pref";
         private UserPreferences _UserPreferences = null;
 
@@ -120,18 +120,44 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
-                
-                _SourceFolder = fileDialog.FileName;
-
-                CheckFolderForFiles ();
+                if (FolderIsEmpty ())
+                {
+                    string caption = "No Images found!";
+                    string message = "There are no compatible images within the folder to combine. Please select a folder with compatible images.";
+                    
+                    MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    _SourceFolder = fileDialog.FileName;
+                    CheckFolderFiles ();
+                }
             }
         }
 
-        private void CheckFolderForFiles ()
+        private bool FolderIsEmpty ()
         {
             string[] files = GetFiles ();
 
-            if (files == null)
+            foreach (KeyValuePair<MapTypes, Map> map in _Maps)
+            {
+                string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
+
+                if (images != null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void CheckFolderFiles ()
+        {
+            string[] files = GetFiles ();
+
+            if (files.Length == 0)
                 return;
 
             // Loop through every map type.
@@ -419,7 +445,7 @@ namespace Substance_Map_Combiner
 
         private void MainWindow_FormClosing (object sender, FormClosingEventArgs e)
         {
-            var json = UserPreferences.GetJSON (_UserPreferences);
+            string json = UserPreferences.GetJSON (_UserPreferences);
             File.WriteAllText (_PreferenceFileLocation, json);
         }
     }
