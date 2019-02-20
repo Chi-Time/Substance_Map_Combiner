@@ -450,7 +450,7 @@ namespace Substance_Map_Combiner
         {
             var preferenceWindow = new Preferences_Window (_UserPreferences);
 
-            preferenceWindow.Show ();
+            preferenceWindow.Show (this);
         }
 
         private void MainWindow_FormClosing (object sender, FormClosingEventArgs e)
