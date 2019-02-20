@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 //TODO: Make it so that source and destination folder save where they last where when they've been used.
 //TODO: Make a progress log or a simple text that informs the user when starting map combining and when it's over.
 //TODO: Find a way to possibly make map combining non-locking through async.
-//TODO: Make it so that if the user tries to combine where there is no source or destination folder selected the program doesn't just freeze.
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
 //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
 
@@ -121,25 +120,13 @@ namespace Substance_Map_Combiner
             if (fileDialog.ShowDialog ())
             {
                 _SourceFolder = fileDialog.FileName;
-
-                if (FolderIsEmpty ())
-                {
-                    string caption = "No Images found!";
-                    string message = "There are no compatible images within the folder to combine. Please select a folder with compatible images or add new file suffixes through the preferences menu.";
-                    
-                    MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else
-                {
-                    CheckFolderFiles ();
-                }
+                CheckFolderFiles (_SourceFolder);
             }
         }
 
-        private bool FolderIsEmpty ()
+        private bool FolderIsEmpty (string folder)
         {
-            string[] files = GetFiles ();
+            string[] files = GetFiles (folder);
 
             foreach (KeyValuePair<MapTypes, Map> map in _Maps)
             {
@@ -154,9 +141,9 @@ namespace Substance_Map_Combiner
             return true;
         }
 
-        private void CheckFolderFiles ()
+        private void CheckFolderFiles (string folder)
         {
-            string[] files = GetFiles ();
+            string[] files = GetFiles (folder);
 
             if (files.Length == 0)
                 return;
@@ -215,12 +202,30 @@ namespace Substance_Map_Combiner
 
         private void B_Combine_Images_Click (object sender, EventArgs e)
         {
+            if (FolderIsEmpty (_SourceFolder))
+            {
+                string caption = "No Images found!";
+                string message = "There are no compatible images within the folder to combine. Please select a folder with compatible images or add new file suffixes through the preferences menu.";
+
+                MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (Directory.Exists (_DestinationFolder) == false)
+            {
+                string caption = "No Destination Chosen!";
+                string message = "There is no destination folder chosen. Please choose a destination to place the combined images.";
+
+                MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             CombineImages ();
         }
 
         private void CombineImages ()
         {
-            string[] files = GetFiles ();
+            string[] files = GetFiles (_SourceFolder);
 
             if (files.Length == 0)
                 return;
@@ -238,16 +243,21 @@ namespace Substance_Map_Combiner
         /// Find and returns any image file types found within the source folder.
         /// </summary>
         /// <returns></returns>
-        private string[] GetFiles ()
+        private string[] GetFiles (string folder)
         {
             string[] extensions = new[] { ".jpeg", ".jpg", ".png", ".tga", ".tiff" };
 
-            string[] files = Directory
-                .GetFiles (_SourceFolder)
+            if (Directory.Exists (folder))
+            {
+                string[] files = Directory
+                .GetFiles (folder)
                 .Where (file => extensions.Any (file.ToLower ().EndsWith))
                 .ToArray ();
 
-            return files;
+                return files;
+            }
+
+            return new string[0];
         }
 
         private void CreateCombinedImageMap (Map map, string[] files)
@@ -255,10 +265,9 @@ namespace Substance_Map_Combiner
             string[] images = GetFilesWithSuffix (map.Suffixes, files);
             string mapName = _UserPreferences.ExportFileName + map.OutputSuffix + _UserPreferences.ExportFileType;
 
-            if (images != null)
+            if (images != null && Directory.Exists (_DestinationFolder))
             {
                 ImageCombiner.CombineImages (images[0], images.ToArray (), _DestinationFolder, mapName, map.BackgroundColor);
-
                 return;
             }
         }
@@ -440,6 +449,11 @@ namespace Substance_Map_Combiner
         }
 
         private void MainWindow_FormClosing (object sender, FormClosingEventArgs e)
+        {
+            SavePreferences ();
+        }
+
+        private void SavePreferences ()
         {
             string json = UserPreferences.GetJSON (_UserPreferences);
             File.WriteAllText (_PreferenceFileLocation, json);
