@@ -578,7 +578,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
-            this.Text = "Main Window";
+            this.Text = "Substance Map Combiner";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.Main_Window_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
