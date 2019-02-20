@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
+//TODO: Make it so that source and destination folder save where they last where when they've been used.
+//TODO: Make a progress log or a simple text that informs the user when starting map combining and when it's over.
+//TODO: Find a way to possibly make map combining non-locking through async.
+//TODO: Make it so that if the user selects a source folder with no files a warning pop's up telling them so.
+//TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
+//That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
+
 namespace Substance_Map_Combiner
 {
     public partial class MainWindow : Form
@@ -81,27 +88,30 @@ namespace Substance_Map_Combiner
         private void InitialiseInterface ()
         {
             SetupCheckBoxEvents ();
-            UpdateButton (B_BaseColorPicker, MapTypes.BaseColor);
-            UpdateButton (B_RoughnessPicker, MapTypes.Roughness);
-            UpdateButton (B_MetallicPicker, MapTypes.Metallic);
-            UpdateButton (B_AmbientOcclusionPicker, MapTypes.AO);
-            UpdateButton (B_IORPicker, MapTypes.IOR);
-            UpdateButton (B_NormalPicker, MapTypes.Normal);
-            UpdateButton (B_NormalDXPicker, MapTypes.NormalDX);
-            UpdateButton (B_HeightPicker, MapTypes.Height);
-            UpdateButton (B_EmissivePicker, MapTypes.Emissive);
-            UpdateButton (B_ReflectionPicker, MapTypes.Reflection);
-            UpdateButton (B_DiffusePicker, MapTypes.Diffuse);
-            UpdateButton (B_SpecularPicker, MapTypes.Specular);
-            UpdateButton (B_GlossinessPicker, MapTypes.Glossiness);
+            SetupButtonClickEvents ();
+            UpdateColorButtons ();
 
             TxtBx_FileName.Text = _UserPreferences.ExportFileName;
             CB_FileType.Text = _UserPreferences.ExportFileType;
         }
 
-        private void UpdateButton (Button button, MapTypes mapType)
+        private void UpdateColorButtons ()
         {
-            button.BackColor = _Maps[mapType].BackgroundColor;
+            foreach (var control in flowLayoutPanel1.Controls)
+            {
+                if (control is Button button)
+                {
+                    for (int i = 0; i < Enum.GetNames (typeof (MapTypes)).Length; i++)
+                    {
+                        var mapType = (MapTypes)i;
+
+                        if ((string)button.Tag == mapType.ToString ())
+                        {
+                            button.BackColor = _Maps[mapType].BackgroundColor;
+                        }
+                    }
+                }
+            }
         }
 
         private void B_Source_Folder_Button_Click (object sender, EventArgs e)
@@ -110,9 +120,7 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
-                //TODO: Make it so that if the user selects a source folder with no files a warning pop's up telling them so.
-                //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
-                //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
+                
                 _SourceFolder = fileDialog.FileName;
 
                 CheckFolderForFiles ();
@@ -250,8 +258,6 @@ namespace Substance_Map_Combiner
             return null;
         }
 
-        #region Checkboxes
-
         private void SetupCheckBoxEvents ()
         {
             checkBox1.CheckedChanged += ChB_CheckedChanged;
@@ -269,193 +275,47 @@ namespace Substance_Map_Combiner
             CB_Reflection.CheckedChanged += ChB_CheckedChanged;
         }
 
-        private void ChB_CheckedChanged (object sender, EventArgs e)
+        private void SetupButtonClickEvents ()
         {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                {
-                    string tag = (string)checkBox.Tag;
+            B_BaseColorPicker.Click += B_ColorPicker_Click;
+            B_BaseColorPicker.MouseDown += B_ColorPicker_MouseDown;
 
-                    if (Enum.TryParse (tag, out MapTypes mapType))
-                    {
-                        SelectMap (checkBox, mapType);
-                    }
-                }
-            }
+            B_RoughnessPicker.Click += B_ColorPicker_Click;
+            B_RoughnessPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_MetallicPicker.Click += B_ColorPicker_Click;
+            B_MetallicPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_AmbientOcclusionPicker.Click += B_ColorPicker_Click;
+            B_AmbientOcclusionPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_IORPicker.Click += B_ColorPicker_Click;
+            B_IORPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_NormalPicker.Click += B_ColorPicker_Click;
+            B_NormalPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_NormalDXPicker.Click += B_ColorPicker_Click;
+            B_NormalDXPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_HeightPicker.Click += B_ColorPicker_Click;
+            B_HeightPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_EmissivePicker.Click += B_ColorPicker_Click;
+            B_EmissivePicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_DiffusePicker.Click += B_ColorPicker_Click;
+            B_DiffusePicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_SpecularPicker.Click += B_ColorPicker_Click;
+            B_SpecularPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_GlossinessPicker.Click += B_ColorPicker_Click;
+            B_GlossinessPicker.MouseDown += B_ColorPicker_MouseDown;
+
+            B_ReflectionPicker.Click += B_ColorPicker_Click;
+            B_ReflectionPicker.MouseDown += B_ColorPicker_MouseDown;
         }
-
-        private void SelectMap (CheckBox checkBox, MapTypes mapType)
-        {
-            _Maps[mapType].IsSelected = checkBox.Checked;
-        }
-        
-        private void TxtBx_FileName_TextChanged (object sender, EventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                if (textBox != null)
-                    _UserPreferences.ExportFileName = textBox.Text;
-            }
-        }
-
-        private void CB_FileType_SelectedIndexChanged (object sender, EventArgs e)
-        {
-            if (sender is ComboBox comboBox)
-            {
-                if (comboBox != null)
-                    _UserPreferences.ExportFileType = comboBox.Text;
-            }
-        }
-
-        #region Color Boxes
-
-        
-
-        private void B_BaseColorPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.BaseColor].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_RoughnessPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Roughness].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_MetallicPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Metallic].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_AmbientOcclusionPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.AO].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_IORPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.IOR].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_NormalPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Normal].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_NormalDXPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.NormalDX].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_HeightPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Height].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_EmissivePicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Emissive].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_DiffusePicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Diffuse].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_SpecularPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Specular].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_GlossinessPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Glossiness].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        private void B_ReflectionPicker_Click (object sender, EventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button != null)
-                {
-                    _Maps[MapTypes.Reflection].BackgroundColor = GetBackgroundColor (button);
-                }
-            }
-        }
-
-        #endregion
 
         private Color GetBackgroundColor (Button button)
         {
@@ -477,6 +337,79 @@ namespace Substance_Map_Combiner
             return button.BackColor;
         }
 
+        private void ResetColorToDefault (Button button, Map map)
+        {
+            map.BackgroundColor = map.DefaultBackgroundColor;
+            button.BackColor = map.DefaultBackgroundColor;
+        }
+
+        private void ChB_CheckedChanged (object sender, EventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                if (checkBox != null)
+                {
+                    string tag = (string)checkBox.Tag;
+
+                    if (Enum.TryParse (tag, out MapTypes mapType))
+                    {
+                        _Maps[mapType].IsSelected = checkBox.Checked;
+                    }
+                }
+            }
+        }
+
+        private void B_ColorPicker_Click (object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                if (button != null)
+                {
+                    string tag = (string)button.Tag;
+
+                    if (Enum.TryParse (tag, out MapTypes mapType))
+                    {
+                        _Maps[mapType].BackgroundColor = GetBackgroundColor (button);
+                    }
+                }
+            }
+        }
+
+        private void B_ColorPicker_MouseDown (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (sender is Button button)
+                {
+                    string tag = (string)button.Tag;
+
+                    if (Enum.TryParse (tag, out MapTypes mapType))
+                    {
+                        var map = _UserPreferences.GetMap (mapType);
+                        ResetColorToDefault (sender as Button, map);
+                    }
+                }
+            }
+        }
+
+        private void TxtBx_FileName_TextChanged (object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                if (textBox != null)
+                    _UserPreferences.ExportFileName = textBox.Text;
+            }
+        }
+
+        private void CB_FileType_SelectedIndexChanged (object sender, EventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                if (comboBox != null)
+                    _UserPreferences.ExportFileType = comboBox.Text;
+            }
+        }
+
         private void TSMI_Preferences_Click (object sender, EventArgs e)
         {
             var preferenceWindow = new Preferences_Window (_UserPreferences);
@@ -488,129 +421,6 @@ namespace Substance_Map_Combiner
         {
             var json = UserPreferences.GetJSON (_UserPreferences);
             File.WriteAllText (_PreferenceFileLocation, json);
-        }
-
-        private void ResetColorToDefault (Button button, Map map)
-        {
-            map.BackgroundColor = map.DefaultBackgroundColor;
-            button.BackColor = map.DefaultBackgroundColor;
-        }
-
-        private void B_BaseColorPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.BaseColor);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_RoughnessPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Roughness);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_MetallicPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Metallic);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_AmbientOcclusionPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.AO);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_IORPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.IOR);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_NormalPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Normal);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_NormalDXPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.NormalDX);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_HeightPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Height);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_EmissivePicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Emissive);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_DiffusePicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Diffuse);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_SpecularPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Specular);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_GlossinessPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Glossiness);
-                ResetColorToDefault (sender as Button, map);
-            }
-        }
-
-        private void B_ReflectionPicker_MouseDown (object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var map = _UserPreferences.GetMap (MapTypes.Reflection);
-                ResetColorToDefault (sender as Button, map);
-            }
         }
     }
 }
