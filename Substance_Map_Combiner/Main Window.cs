@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-//TODO: Make it so that source and destination folder save where they last where when they've been used.
 //TODO: Make a progress log or a simple text that informs the user when starting map combining and when it's over.
 //TODO: Find a way to possibly make map combining non-locking through async.
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
@@ -20,8 +19,6 @@ namespace Substance_Map_Combiner
 {
     public partial class MainWindow : Form
     {
-        private string _SourceFolder = @"";
-        private string _DestinationFolder = @"";
         private string _PreferenceFileLocation = "Preferences.pref";
         private UserPreferences _UserPreferences = null;
 
@@ -119,8 +116,8 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
-                _SourceFolder = fileDialog.FileName;
-                CheckFolderFiles (_SourceFolder);
+                _UserPreferences.SourceFolder = fileDialog.FileName;
+                CheckFolderFiles (_UserPreferences.SourceFolder);
             }
         }
 
@@ -196,13 +193,13 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
-                _DestinationFolder = fileDialog.FileName;
+                _UserPreferences.DestinationFolder = fileDialog.FileName;
             }
         }
 
         private void B_Combine_Images_Click (object sender, EventArgs e)
         {
-            if (FolderIsEmpty (_SourceFolder))
+            if (FolderIsEmpty (_UserPreferences.SourceFolder))
             {
                 string caption = "No Images found!";
                 string message = "There are no compatible images within the folder to combine. Please select a folder with compatible images or add new file suffixes through the preferences menu.";
@@ -211,7 +208,7 @@ namespace Substance_Map_Combiner
                 return;
             }
 
-            if (Directory.Exists (_DestinationFolder) == false)
+            if (Directory.Exists (_UserPreferences.DestinationFolder) == false)
             {
                 string caption = "No Destination Chosen!";
                 string message = "There is no destination folder chosen. Please choose a destination to place the combined images.";
@@ -225,7 +222,7 @@ namespace Substance_Map_Combiner
 
         private void CombineImages ()
         {
-            string[] files = GetFiles (_SourceFolder);
+            string[] files = GetFiles (_UserPreferences.SourceFolder);
 
             if (files.Length == 0)
                 return;
@@ -265,9 +262,9 @@ namespace Substance_Map_Combiner
             string[] images = GetFilesWithSuffix (map.Suffixes, files);
             string mapName = _UserPreferences.ExportFileName + map.OutputSuffix + _UserPreferences.ExportFileType;
 
-            if (images != null && Directory.Exists (_DestinationFolder))
+            if (images != null && Directory.Exists (_UserPreferences.DestinationFolder))
             {
-                ImageCombiner.CombineImages (images[0], images.ToArray (), _DestinationFolder, mapName, map.BackgroundColor);
+                ImageCombiner.CombineImages (images[0], images.ToArray (), _UserPreferences.DestinationFolder, mapName, map.BackgroundColor);
                 return;
             }
         }
@@ -291,7 +288,7 @@ namespace Substance_Map_Combiner
 
         private void SetupCheckBoxEvents ()
         {
-            checkBox1.CheckedChanged += ChB_CheckedChanged;
+            CB_BaseColor.CheckedChanged += ChB_CheckedChanged;
             CB_Roughness.CheckedChanged += ChB_CheckedChanged;
             CB_Metallic.CheckedChanged += ChB_CheckedChanged;
             CB_Ambient_Occlusion.CheckedChanged += ChB_CheckedChanged;

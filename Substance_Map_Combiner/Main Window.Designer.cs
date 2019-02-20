@@ -33,7 +33,7 @@
             this.B_Combine_Images = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.B_BaseColorPicker = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.CB_BaseColor = new System.Windows.Forms.CheckBox();
             this.B_RoughnessPicker = new System.Windows.Forms.Button();
             this.CB_Roughness = new System.Windows.Forms.CheckBox();
             this.B_MetallicPicker = new System.Windows.Forms.Button();
@@ -102,7 +102,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.B_BaseColorPicker);
-            this.flowLayoutPanel1.Controls.Add(this.checkBox1);
+            this.flowLayoutPanel1.Controls.Add(this.CB_BaseColor);
             this.flowLayoutPanel1.Controls.Add(this.B_RoughnessPicker);
             this.flowLayoutPanel1.Controls.Add(this.CB_Roughness);
             this.flowLayoutPanel1.Controls.Add(this.B_MetallicPicker);
@@ -144,16 +144,16 @@
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.BackColor = System.Drawing.Color.Silver;
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.checkBox1.Location = new System.Drawing.Point(3, 32);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(75, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Tag = "BaseColor";
-            this.checkBox1.Text = "Base Color";
-            this.checkBox1.UseVisualStyleBackColor = false;
+            this.CB_BaseColor.AutoSize = true;
+            this.CB_BaseColor.BackColor = System.Drawing.Color.Silver;
+            this.CB_BaseColor.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.CB_BaseColor.Location = new System.Drawing.Point(3, 32);
+            this.CB_BaseColor.Name = "checkBox1";
+            this.CB_BaseColor.Size = new System.Drawing.Size(75, 17);
+            this.CB_BaseColor.TabIndex = 0;
+            this.CB_BaseColor.Tag = "BaseColor";
+            this.CB_BaseColor.Text = "Base Color";
+            this.CB_BaseColor.UseVisualStyleBackColor = false;
             // 
             // B_RoughnessPicker
             // 
@@ -479,7 +479,7 @@
         private System.Windows.Forms.Button B_Destination_Folder;
         private System.Windows.Forms.Button B_Combine_Images;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox CB_BaseColor;
         private System.Windows.Forms.CheckBox CB_Roughness;
         private System.Windows.Forms.CheckBox CB_Metallic;
         private System.Windows.Forms.CheckBox CB_Ambient_Occlusion;

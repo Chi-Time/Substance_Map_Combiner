@@ -10,6 +10,10 @@ namespace Substance_Map_Combiner
 {
     public class UserPreferences
     {
+        [JsonProperty ("source_folder")]
+        public string SourceFolder = "";
+        [JsonProperty ("destination_folder")]
+        public string DestinationFolder = "";
         [JsonProperty ("file_name")]
         public string ExportFileName = "Combined";
         [JsonProperty ("file_type")]
