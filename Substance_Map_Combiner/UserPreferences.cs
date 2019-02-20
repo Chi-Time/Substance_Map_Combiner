@@ -10,8 +10,11 @@ namespace Substance_Map_Combiner
 {
     public class UserPreferences
     {
+        [JsonProperty ("file_name")]
         public string ExportFileName = "Combined";
+        [JsonProperty ("file_type")]
         public string ExportFileType = ".png";
+        [JsonProperty ("maps")]
         public Dictionary<MapTypes, Map> Maps;
 
         public Map GetMap (MapTypes mapType)

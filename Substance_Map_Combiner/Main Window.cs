@@ -109,7 +109,89 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
+                //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
+                //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
                 _SourceFolder = fileDialog.FileName;
+
+                // Get the various image extensions
+                string[] extensions = new[] { ".jpeg", ".jpg", ".png", ".tga", ".tiff" };
+
+                // Find all files in the chosen folder that have these extensions
+                string[] files = Directory
+                .GetFiles (_SourceFolder)
+                .Where (file => extensions.Any (file.ToLower ().EndsWith))
+                .ToArray ();
+
+                // Loop through every map type.
+                foreach (KeyValuePair<MapTypes, Map> map in _Maps)
+                {
+                    // Determine if the map type is in the current image list by filtering if it's suffix can be found.
+                    string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
+
+                    // If it's suffix can be found then perform more logic as it's in the folder.
+                    if (images != null)
+                    {
+                        map.Value.IsSelected = true;
+
+                        switch (map.Key)
+                        {
+                            case MapTypes.Base_Color:
+                                map.Value.IsSelected = true;
+                                checkBox1.Checked = true;
+                                break;
+                            case MapTypes.Roughness:
+                                map.Value.IsSelected = true;
+                                CB_Roughness.Checked = true;
+                                break;
+                            case MapTypes.Metallic:
+                                map.Value.IsSelected = true;
+                                CB_Metallic.Checked = true;
+                                break;
+                            case MapTypes.AO:
+                                map.Value.IsSelected = true;
+                                CB_Ambient_Occlusion.Checked = true;
+                                break;
+                            case MapTypes.IOR:
+                                map.Value.IsSelected = true;
+                                CB_IOR.Checked = true;
+                                break;
+                            case MapTypes.Normal:
+                                map.Value.IsSelected = true;
+                                CB_Normal.Checked = true;
+                                break;
+                            case MapTypes.NormalDX:
+                                map.Value.IsSelected = true;
+                                CB_NormalDX.Checked = true;
+                                break;
+                            case MapTypes.Height:
+                                map.Value.IsSelected = true;
+                                CB_Height.Checked = true;
+                                break;
+                            case MapTypes.Emissive:
+                                map.Value.IsSelected = true;
+                                CB_Emissive.Checked = true;
+                                break;
+                            case MapTypes.Reflection:
+                                map.Value.IsSelected = true;
+                                CB_Reflection.Checked = true;
+                                break;
+                            case MapTypes.Diffuse:
+                                map.Value.IsSelected = true;
+                                CB_Diffuse.Checked = true;
+                                break;
+                            case MapTypes.Specular:
+                                map.Value.IsSelected = true;
+                                CB_Specular.Checked = true;
+                                break;
+                            case MapTypes.Glossiness:
+                                map.Value.IsSelected = true;
+                                CB_Glossiness.Checked = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
         }
 
