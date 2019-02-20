@@ -80,7 +80,6 @@
       <DependentUpon>Main Window.cs</DependentUpon>
     </Compile>
     <Compile Include="Map.cs" />
-    <Compile Include="MapProfile.cs" />
     <Compile Include="MapTypes.cs" />
     <Compile Include="Preferences Window.cs">
       <SubType>Form</SubType>

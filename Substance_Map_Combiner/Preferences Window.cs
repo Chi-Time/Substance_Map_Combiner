@@ -13,7 +13,7 @@ namespace Substance_Map_Combiner
     public partial class Preferences_Window : Form
     {
         private UserPreferences _UserPrefences = null;
-        private MapTypes _CurrentMapType = MapTypes.Base_Color;
+        private MapTypes _CurrentMapType = MapTypes.BaseColor;
 
         public Preferences_Window (UserPreferences userPreferences)
         {
@@ -26,8 +26,8 @@ namespace Substance_Map_Combiner
         private void InitialiseSuffixList ()
         {
             CmBx_SuffixType.Text = "Base Color";
-            TxtBx_Suffixes.Text = GetSuffixes (_UserPrefences.Maps[MapTypes.Base_Color].Suffixes);
-            TxtBx_OutputSuffix.Text = _UserPrefences.GetMap (MapTypes.Base_Color).OutputSuffix;
+            TxtBx_Suffixes.Text = GetSuffixes (_UserPrefences.Maps[MapTypes.BaseColor].Suffixes);
+            TxtBx_OutputSuffix.Text = _UserPrefences.GetMap (MapTypes.BaseColor).OutputSuffix;
         }
 
         private void Preferences_Window_Load (object sender, EventArgs e)
@@ -76,7 +76,7 @@ namespace Substance_Map_Combiner
 
                     if (IsSuffixType (text, "Base Color"))
                     {
-                        _CurrentMapType = MapTypes.Base_Color;
+                        _CurrentMapType = MapTypes.BaseColor;
                         UpdateTextBoxes ();
                     }
 

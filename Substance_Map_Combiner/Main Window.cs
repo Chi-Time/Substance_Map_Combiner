@@ -43,7 +43,7 @@ namespace Substance_Map_Combiner
 
         private void InitialiseDefaultPreferences ()
         {
-            AddNewMap (MapTypes.Base_Color, "_Base_Color", Color.WhiteSmoke);
+            AddNewMap (MapTypes.BaseColor, "_Base_Color", Color.WhiteSmoke);
             AddNewMap (MapTypes.Roughness, "_Roughness", Color.DarkGray);
             AddNewMap (MapTypes.Metallic, "_Metallic", Color.DimGray);
             AddNewMap (MapTypes.AO, "_Ambient_occlusion", Color.White);
@@ -80,7 +80,8 @@ namespace Substance_Map_Combiner
 
         private void InitialiseInterface ()
         {
-            UpdateButton (B_BaseColorPicker, MapTypes.Base_Color);
+            SetupCheckBoxEvents ();
+            UpdateButton (B_BaseColorPicker, MapTypes.BaseColor);
             UpdateButton (B_RoughnessPicker, MapTypes.Roughness);
             UpdateButton (B_MetallicPicker, MapTypes.Metallic);
             UpdateButton (B_AmbientOcclusionPicker, MapTypes.AO);
@@ -109,90 +110,62 @@ namespace Substance_Map_Combiner
 
             if (fileDialog.ShowDialog ())
             {
+                //TODO: Make it so that if the user selects a source folder with no files a warning pop's up telling them so.
                 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
                 //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
                 _SourceFolder = fileDialog.FileName;
 
-                // Get the various image extensions
-                string[] extensions = new[] { ".jpeg", ".jpg", ".png", ".tga", ".tiff" };
-
-                // Find all files in the chosen folder that have these extensions
-                string[] files = Directory
-                .GetFiles (_SourceFolder)
-                .Where (file => extensions.Any (file.ToLower ().EndsWith))
-                .ToArray ();
-
-                // Loop through every map type.
-                foreach (KeyValuePair<MapTypes, Map> map in _Maps)
-                {
-                    // Determine if the map type is in the current image list by filtering if it's suffix can be found.
-                    string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
-
-                    // If it's suffix can be found then perform more logic as it's in the folder.
-                    if (images != null)
-                    {
-                        map.Value.IsSelected = true;
-
-                        switch (map.Key)
-                        {
-                            case MapTypes.Base_Color:
-                                map.Value.IsSelected = true;
-                                checkBox1.Checked = true;
-                                break;
-                            case MapTypes.Roughness:
-                                map.Value.IsSelected = true;
-                                CB_Roughness.Checked = true;
-                                break;
-                            case MapTypes.Metallic:
-                                map.Value.IsSelected = true;
-                                CB_Metallic.Checked = true;
-                                break;
-                            case MapTypes.AO:
-                                map.Value.IsSelected = true;
-                                CB_Ambient_Occlusion.Checked = true;
-                                break;
-                            case MapTypes.IOR:
-                                map.Value.IsSelected = true;
-                                CB_IOR.Checked = true;
-                                break;
-                            case MapTypes.Normal:
-                                map.Value.IsSelected = true;
-                                CB_Normal.Checked = true;
-                                break;
-                            case MapTypes.NormalDX:
-                                map.Value.IsSelected = true;
-                                CB_NormalDX.Checked = true;
-                                break;
-                            case MapTypes.Height:
-                                map.Value.IsSelected = true;
-                                CB_Height.Checked = true;
-                                break;
-                            case MapTypes.Emissive:
-                                map.Value.IsSelected = true;
-                                CB_Emissive.Checked = true;
-                                break;
-                            case MapTypes.Reflection:
-                                map.Value.IsSelected = true;
-                                CB_Reflection.Checked = true;
-                                break;
-                            case MapTypes.Diffuse:
-                                map.Value.IsSelected = true;
-                                CB_Diffuse.Checked = true;
-                                break;
-                            case MapTypes.Specular:
-                                map.Value.IsSelected = true;
-                                CB_Specular.Checked = true;
-                                break;
-                            case MapTypes.Glossiness:
-                                map.Value.IsSelected = true;
-                                CB_Glossiness.Checked = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+                CheckFolderForFiles ();
             }
+        }
+
+        private void CheckFolderForFiles ()
+        {
+            string[] files = GetFiles ();
+
+            if (files == null)
+                return;
+
+            // Loop through every map type.
+            foreach (KeyValuePair<MapTypes, Map> map in _Maps)
+            {
+                PreselectImagesFromFolder (map, files);
+            }
+        }
+
+        private void PreselectImagesFromFolder (KeyValuePair<MapTypes, Map> map, string[] files)
+        {
+            // Determine if the map type is in the current image list by filtering if it's suffix can be found.
+            string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
+
+            // If it's suffix can be found then perform more logic as it's in the folder.
+            if (images != null)
+            {
+                // Set the map to be selected as it's in the folder.
+                map.Value.IsSelected = true;
+
+                var checkBox = GetCheckBoxFromMapType (map.Key);
+
+                if (checkBox != null)
+                    checkBox.Checked = true;
+            }
+        }
+
+        private CheckBox GetCheckBoxFromMapType (MapTypes mapType)
+        {
+            // Grab all of the controls and loop through them.
+            var controls = flowLayoutPanel1.Controls;
+            string tag = mapType.ToString ();
+
+            foreach (var control in controls)
+            {
+                // If it's a checkbox that corresponds with the map then set it to checked.
+                if (control is CheckBox checkBox)
+                    if ((string)checkBox.Tag == tag)
+                        return checkBox;
+            }
+
+            return null;
         }
 
         private void B_Destination_Folder_Click (object sender, EventArgs e)
@@ -207,22 +180,47 @@ namespace Substance_Map_Combiner
 
         private void B_Combine_Images_Click (object sender, EventArgs e)
         {
-            string[] extensions = new [] { ".jpeg", ".jpg", ".png", ".tga", ".tiff"};
-            string[] files = Directory
-                .GetFiles (_SourceFolder)
-                .Where (file => extensions.Any (file.ToLower ().EndsWith))
-                .ToArray ();
+            CombineImages ();
+        }
+
+        private void CombineImages ()
+        {
+            string[] files = GetFiles ();
+
+            if (files == null)
+                return;
 
             foreach (KeyValuePair<MapTypes, Map> map in _Maps)
             {
                 if (map.Value.IsSelected)
                 {
-                    CreateMap (map.Value, files);
+                    CreateCombinedImageMap (map.Value, files);
                 }
             }
         }
 
-        private void CreateMap (Map map, string[] files)
+        /// <summary>
+        /// Find and returns any image file types found within the source folder.
+        /// </summary>
+        /// <returns></returns>
+        private string[] GetFiles ()
+        {
+            string[] extensions = new[] { ".jpeg", ".jpg", ".png", ".tga", ".tiff" };
+
+            if (extensions != null)
+            {
+                string[] files = Directory
+                .GetFiles (_SourceFolder)
+                .Where (file => extensions.Any (file.ToLower ().EndsWith))
+                .ToArray ();
+
+                return files;
+            }
+
+            return null;
+        }
+
+        private void CreateCombinedImageMap (Map map, string[] files)
         {
             string[] images = GetFilesWithSuffix (map.Suffixes, files);
             string mapName = _UserPreferences.ExportFileName + map.OutputSuffix + _UserPreferences.ExportFileType;
@@ -254,124 +252,43 @@ namespace Substance_Map_Combiner
 
         #region Checkboxes
 
-        private void CB_Base_Color_CheckedChanged (object sender, EventArgs e)
+        private void SetupCheckBoxEvents ()
+        {
+            checkBox1.CheckedChanged += ChB_CheckedChanged;
+            CB_Roughness.CheckedChanged += ChB_CheckedChanged;
+            CB_Metallic.CheckedChanged += ChB_CheckedChanged;
+            CB_Ambient_Occlusion.CheckedChanged += ChB_CheckedChanged;
+            CB_IOR.CheckedChanged += ChB_CheckedChanged;
+            CB_Normal.CheckedChanged += ChB_CheckedChanged;
+            CB_NormalDX.CheckedChanged += ChB_CheckedChanged;
+            CB_Height.CheckedChanged += ChB_CheckedChanged;
+            CB_Emissive.CheckedChanged += ChB_CheckedChanged;
+            CB_Diffuse.CheckedChanged += ChB_CheckedChanged;
+            CB_Specular.CheckedChanged += ChB_CheckedChanged;
+            CB_Glossiness.CheckedChanged += ChB_CheckedChanged;
+            CB_Reflection.CheckedChanged += ChB_CheckedChanged;
+        }
+
+        private void ChB_CheckedChanged (object sender, EventArgs e)
         {
             if (sender is CheckBox checkBox)
             {
                 if (checkBox != null)
-                    _Maps[MapTypes.Base_Color].IsSelected = checkBox.Checked;
+                {
+                    string tag = (string)checkBox.Tag;
+
+                    if (Enum.TryParse (tag, out MapTypes mapType))
+                    {
+                        SelectMap (checkBox, mapType);
+                    }
+                }
             }
         }
 
-        private void CB_Roughness_CheckedChanged (object sender, EventArgs e)
+        private void SelectMap (CheckBox checkBox, MapTypes mapType)
         {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Roughness].IsSelected = checkBox.Checked;
-            }
+            _Maps[mapType].IsSelected = checkBox.Checked;
         }
-
-        private void CB_Metallic_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Metallic].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Ambient_Occlusion_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.AO].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_IOR_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.IOR].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Normal_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Normal].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_NormalDX_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.NormalDX].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Height_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Height].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Emissive_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Emissive].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Reflection_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Reflection].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Diffuse_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Diffuse].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Specular_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Specular].IsSelected = checkBox.Checked;
-            }
-        }
-
-        private void CB_Glossiness_CheckedChanged (object sender, EventArgs e)
-        {
-            if (sender is CheckBox checkBox)
-            {
-                if (checkBox != null)
-                    _Maps[MapTypes.Glossiness].IsSelected = checkBox.Checked;
-            }
-        }
-
-        #endregion
         
         private void TxtBx_FileName_TextChanged (object sender, EventArgs e)
         {
@@ -393,13 +310,15 @@ namespace Substance_Map_Combiner
 
         #region Color Boxes
 
+        
+
         private void B_BaseColorPicker_Click (object sender, EventArgs e)
         {
             if (sender is Button button)
             {
                 if (button != null)
                 {
-                    _Maps[MapTypes.Base_Color].BackgroundColor = GetBackgroundColor (button);
+                    _Maps[MapTypes.BaseColor].BackgroundColor = GetBackgroundColor (button);
                 }
             }
         }
@@ -581,7 +500,7 @@ namespace Substance_Map_Combiner
         {
             if (e.Button == MouseButtons.Right)
             {
-                var map = _UserPreferences.GetMap (MapTypes.Base_Color);
+                var map = _UserPreferences.GetMap (MapTypes.BaseColor);
                 ResetColorToDefault (sender as Button, map);
             }
         }

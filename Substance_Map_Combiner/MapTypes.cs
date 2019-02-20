@@ -8,7 +8,7 @@ namespace Substance_Map_Combiner
 {
     public enum MapTypes
     {
-        Base_Color = 0,
+        BaseColor = 0,
         Roughness,
         Metallic,
         AO,

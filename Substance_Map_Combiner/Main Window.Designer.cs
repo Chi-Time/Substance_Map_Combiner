@@ -139,6 +139,7 @@
             this.B_BaseColorPicker.Name = "B_BaseColorPicker";
             this.B_BaseColorPicker.Size = new System.Drawing.Size(75, 23);
             this.B_BaseColorPicker.TabIndex = 13;
+            this.B_BaseColorPicker.Tag = "BaseColor";
             this.B_BaseColorPicker.UseVisualStyleBackColor = true;
             this.B_BaseColorPicker.Click += new System.EventHandler(this.B_BaseColorPicker_Click);
             this.B_BaseColorPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_BaseColorPicker_MouseDown);
@@ -152,9 +153,9 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(75, 17);
             this.checkBox1.TabIndex = 0;
+            this.checkBox1.Tag = "BaseColor";
             this.checkBox1.Text = "Base Color";
             this.checkBox1.UseVisualStyleBackColor = false;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.CB_Base_Color_CheckedChanged);
             // 
             // B_RoughnessPicker
             // 
@@ -162,6 +163,7 @@
             this.B_RoughnessPicker.Name = "B_RoughnessPicker";
             this.B_RoughnessPicker.Size = new System.Drawing.Size(75, 23);
             this.B_RoughnessPicker.TabIndex = 14;
+            this.B_RoughnessPicker.Tag = "Base_Color";
             this.B_RoughnessPicker.UseVisualStyleBackColor = true;
             this.B_RoughnessPicker.Click += new System.EventHandler(this.B_RoughnessPicker_Click);
             this.B_RoughnessPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_RoughnessPicker_MouseDown);
@@ -173,9 +175,9 @@
             this.CB_Roughness.Name = "CB_Roughness";
             this.CB_Roughness.Size = new System.Drawing.Size(80, 17);
             this.CB_Roughness.TabIndex = 1;
+            this.CB_Roughness.Tag = "Roughness";
             this.CB_Roughness.Text = "Roughness";
             this.CB_Roughness.UseVisualStyleBackColor = true;
-            this.CB_Roughness.CheckedChanged += new System.EventHandler(this.CB_Roughness_CheckedChanged);
             // 
             // B_MetallicPicker
             // 
@@ -183,6 +185,7 @@
             this.B_MetallicPicker.Name = "B_MetallicPicker";
             this.B_MetallicPicker.Size = new System.Drawing.Size(75, 23);
             this.B_MetallicPicker.TabIndex = 17;
+            this.B_MetallicPicker.Tag = "Metallic";
             this.B_MetallicPicker.UseVisualStyleBackColor = true;
             this.B_MetallicPicker.Click += new System.EventHandler(this.B_MetallicPicker_Click);
             this.B_MetallicPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_MetallicPicker_MouseDown);
@@ -194,9 +197,9 @@
             this.CB_Metallic.Name = "CB_Metallic";
             this.CB_Metallic.Size = new System.Drawing.Size(62, 17);
             this.CB_Metallic.TabIndex = 2;
+            this.CB_Metallic.Tag = "Metallic";
             this.CB_Metallic.Text = "Metallic";
             this.CB_Metallic.UseVisualStyleBackColor = true;
-            this.CB_Metallic.CheckedChanged += new System.EventHandler(this.CB_Metallic_CheckedChanged);
             // 
             // B_AmbientOcclusionPicker
             // 
@@ -204,6 +207,7 @@
             this.B_AmbientOcclusionPicker.Name = "B_AmbientOcclusionPicker";
             this.B_AmbientOcclusionPicker.Size = new System.Drawing.Size(75, 23);
             this.B_AmbientOcclusionPicker.TabIndex = 15;
+            this.B_AmbientOcclusionPicker.Tag = "AO";
             this.B_AmbientOcclusionPicker.UseVisualStyleBackColor = true;
             this.B_AmbientOcclusionPicker.Click += new System.EventHandler(this.B_AmbientOcclusionPicker_Click);
             this.B_AmbientOcclusionPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_AmbientOcclusionPicker_MouseDown);
@@ -213,18 +217,19 @@
             this.CB_Ambient_Occlusion.AutoSize = true;
             this.CB_Ambient_Occlusion.Location = new System.Drawing.Point(3, 188);
             this.CB_Ambient_Occlusion.Name = "CB_Ambient_Occlusion";
-            this.CB_Ambient_Occlusion.Size = new System.Drawing.Size(114, 17);
+            this.CB_Ambient_Occlusion.Size = new System.Drawing.Size(41, 17);
             this.CB_Ambient_Occlusion.TabIndex = 3;
-            this.CB_Ambient_Occlusion.Text = "Ambient Occlusion";
+            this.CB_Ambient_Occlusion.Tag = "AO";
+            this.CB_Ambient_Occlusion.Text = "AO";
             this.CB_Ambient_Occlusion.UseVisualStyleBackColor = true;
-            this.CB_Ambient_Occlusion.CheckedChanged += new System.EventHandler(this.CB_Ambient_Occlusion_CheckedChanged);
             // 
             // B_IORPicker
             // 
-            this.B_IORPicker.Location = new System.Drawing.Point(123, 3);
+            this.B_IORPicker.Location = new System.Drawing.Point(89, 3);
             this.B_IORPicker.Name = "B_IORPicker";
             this.B_IORPicker.Size = new System.Drawing.Size(75, 23);
             this.B_IORPicker.TabIndex = 16;
+            this.B_IORPicker.Tag = "IOR";
             this.B_IORPicker.UseVisualStyleBackColor = true;
             this.B_IORPicker.Click += new System.EventHandler(this.B_IORPicker_Click);
             this.B_IORPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_IORPicker_MouseDown);
@@ -232,20 +237,21 @@
             // CB_IOR
             // 
             this.CB_IOR.AutoSize = true;
-            this.CB_IOR.Location = new System.Drawing.Point(123, 32);
+            this.CB_IOR.Location = new System.Drawing.Point(89, 32);
             this.CB_IOR.Name = "CB_IOR";
             this.CB_IOR.Size = new System.Drawing.Size(45, 17);
             this.CB_IOR.TabIndex = 4;
+            this.CB_IOR.Tag = "IOR";
             this.CB_IOR.Text = "IOR";
             this.CB_IOR.UseVisualStyleBackColor = true;
-            this.CB_IOR.CheckedChanged += new System.EventHandler(this.CB_IOR_CheckedChanged);
             // 
             // B_NormalPicker
             // 
-            this.B_NormalPicker.Location = new System.Drawing.Point(123, 55);
+            this.B_NormalPicker.Location = new System.Drawing.Point(89, 55);
             this.B_NormalPicker.Name = "B_NormalPicker";
             this.B_NormalPicker.Size = new System.Drawing.Size(75, 23);
             this.B_NormalPicker.TabIndex = 18;
+            this.B_NormalPicker.Tag = "Normal";
             this.B_NormalPicker.UseVisualStyleBackColor = true;
             this.B_NormalPicker.Click += new System.EventHandler(this.B_NormalPicker_Click);
             this.B_NormalPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_NormalPicker_MouseDown);
@@ -253,20 +259,21 @@
             // CB_Normal
             // 
             this.CB_Normal.AutoSize = true;
-            this.CB_Normal.Location = new System.Drawing.Point(123, 84);
+            this.CB_Normal.Location = new System.Drawing.Point(89, 84);
             this.CB_Normal.Name = "CB_Normal";
             this.CB_Normal.Size = new System.Drawing.Size(59, 17);
             this.CB_Normal.TabIndex = 5;
+            this.CB_Normal.Tag = "Normal";
             this.CB_Normal.Text = "Normal";
             this.CB_Normal.UseVisualStyleBackColor = true;
-            this.CB_Normal.CheckedChanged += new System.EventHandler(this.CB_Normal_CheckedChanged);
             // 
             // B_NormalDXPicker
             // 
-            this.B_NormalDXPicker.Location = new System.Drawing.Point(123, 107);
+            this.B_NormalDXPicker.Location = new System.Drawing.Point(89, 107);
             this.B_NormalDXPicker.Name = "B_NormalDXPicker";
             this.B_NormalDXPicker.Size = new System.Drawing.Size(75, 23);
             this.B_NormalDXPicker.TabIndex = 19;
+            this.B_NormalDXPicker.Tag = "NormalDX";
             this.B_NormalDXPicker.UseVisualStyleBackColor = true;
             this.B_NormalDXPicker.Click += new System.EventHandler(this.B_NormalDXPicker_Click);
             this.B_NormalDXPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_NormalDXPicker_MouseDown);
@@ -274,20 +281,21 @@
             // CB_NormalDX
             // 
             this.CB_NormalDX.AutoSize = true;
-            this.CB_NormalDX.Location = new System.Drawing.Point(123, 136);
+            this.CB_NormalDX.Location = new System.Drawing.Point(89, 136);
             this.CB_NormalDX.Name = "CB_NormalDX";
             this.CB_NormalDX.Size = new System.Drawing.Size(83, 17);
             this.CB_NormalDX.TabIndex = 6;
+            this.CB_NormalDX.Tag = "NormalDX";
             this.CB_NormalDX.Text = "Normal (DX)";
             this.CB_NormalDX.UseVisualStyleBackColor = true;
-            this.CB_NormalDX.CheckedChanged += new System.EventHandler(this.CB_NormalDX_CheckedChanged);
             // 
             // B_HeightPicker
             // 
-            this.B_HeightPicker.Location = new System.Drawing.Point(123, 159);
+            this.B_HeightPicker.Location = new System.Drawing.Point(89, 159);
             this.B_HeightPicker.Name = "B_HeightPicker";
             this.B_HeightPicker.Size = new System.Drawing.Size(75, 23);
             this.B_HeightPicker.TabIndex = 20;
+            this.B_HeightPicker.Tag = "Height";
             this.B_HeightPicker.UseVisualStyleBackColor = true;
             this.B_HeightPicker.Click += new System.EventHandler(this.B_HeightPicker_Click);
             this.B_HeightPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_HeightPicker_MouseDown);
@@ -295,20 +303,21 @@
             // CB_Height
             // 
             this.CB_Height.AutoSize = true;
-            this.CB_Height.Location = new System.Drawing.Point(123, 188);
+            this.CB_Height.Location = new System.Drawing.Point(89, 188);
             this.CB_Height.Name = "CB_Height";
             this.CB_Height.Size = new System.Drawing.Size(57, 17);
             this.CB_Height.TabIndex = 7;
+            this.CB_Height.Tag = "Height";
             this.CB_Height.Text = "Height";
             this.CB_Height.UseVisualStyleBackColor = true;
-            this.CB_Height.CheckedChanged += new System.EventHandler(this.CB_Height_CheckedChanged);
             // 
             // B_EmissivePicker
             // 
-            this.B_EmissivePicker.Location = new System.Drawing.Point(212, 3);
+            this.B_EmissivePicker.Location = new System.Drawing.Point(178, 3);
             this.B_EmissivePicker.Name = "B_EmissivePicker";
             this.B_EmissivePicker.Size = new System.Drawing.Size(75, 23);
             this.B_EmissivePicker.TabIndex = 21;
+            this.B_EmissivePicker.Tag = "Emissive";
             this.B_EmissivePicker.UseVisualStyleBackColor = true;
             this.B_EmissivePicker.Click += new System.EventHandler(this.B_EmissivePicker_Click);
             this.B_EmissivePicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_EmissivePicker_MouseDown);
@@ -316,20 +325,21 @@
             // CB_Emissive
             // 
             this.CB_Emissive.AutoSize = true;
-            this.CB_Emissive.Location = new System.Drawing.Point(212, 32);
+            this.CB_Emissive.Location = new System.Drawing.Point(178, 32);
             this.CB_Emissive.Name = "CB_Emissive";
             this.CB_Emissive.Size = new System.Drawing.Size(67, 17);
             this.CB_Emissive.TabIndex = 8;
+            this.CB_Emissive.Tag = "Emissive";
             this.CB_Emissive.Text = "Emissive";
             this.CB_Emissive.UseVisualStyleBackColor = true;
-            this.CB_Emissive.CheckedChanged += new System.EventHandler(this.CB_Emissive_CheckedChanged);
             // 
             // B_DiffusePicker
             // 
-            this.B_DiffusePicker.Location = new System.Drawing.Point(212, 55);
+            this.B_DiffusePicker.Location = new System.Drawing.Point(178, 55);
             this.B_DiffusePicker.Name = "B_DiffusePicker";
             this.B_DiffusePicker.Size = new System.Drawing.Size(75, 23);
             this.B_DiffusePicker.TabIndex = 22;
+            this.B_DiffusePicker.Tag = "Diffuse";
             this.B_DiffusePicker.UseVisualStyleBackColor = true;
             this.B_DiffusePicker.Click += new System.EventHandler(this.B_DiffusePicker_Click);
             this.B_DiffusePicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_DiffusePicker_MouseDown);
@@ -337,20 +347,21 @@
             // CB_Diffuse
             // 
             this.CB_Diffuse.AutoSize = true;
-            this.CB_Diffuse.Location = new System.Drawing.Point(212, 84);
+            this.CB_Diffuse.Location = new System.Drawing.Point(178, 84);
             this.CB_Diffuse.Name = "CB_Diffuse";
             this.CB_Diffuse.Size = new System.Drawing.Size(59, 17);
             this.CB_Diffuse.TabIndex = 10;
+            this.CB_Diffuse.Tag = "Diffuse";
             this.CB_Diffuse.Text = "Diffuse";
             this.CB_Diffuse.UseVisualStyleBackColor = true;
-            this.CB_Diffuse.CheckedChanged += new System.EventHandler(this.CB_Diffuse_CheckedChanged);
             // 
             // B_SpecularPicker
             // 
-            this.B_SpecularPicker.Location = new System.Drawing.Point(212, 107);
+            this.B_SpecularPicker.Location = new System.Drawing.Point(178, 107);
             this.B_SpecularPicker.Name = "B_SpecularPicker";
             this.B_SpecularPicker.Size = new System.Drawing.Size(75, 23);
             this.B_SpecularPicker.TabIndex = 23;
+            this.B_SpecularPicker.Tag = "Specular";
             this.B_SpecularPicker.UseVisualStyleBackColor = true;
             this.B_SpecularPicker.Click += new System.EventHandler(this.B_SpecularPicker_Click);
             this.B_SpecularPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_SpecularPicker_MouseDown);
@@ -358,20 +369,21 @@
             // CB_Specular
             // 
             this.CB_Specular.AutoSize = true;
-            this.CB_Specular.Location = new System.Drawing.Point(212, 136);
+            this.CB_Specular.Location = new System.Drawing.Point(178, 136);
             this.CB_Specular.Name = "CB_Specular";
             this.CB_Specular.Size = new System.Drawing.Size(68, 17);
             this.CB_Specular.TabIndex = 11;
+            this.CB_Specular.Tag = "Specular";
             this.CB_Specular.Text = "Specular";
             this.CB_Specular.UseVisualStyleBackColor = true;
-            this.CB_Specular.CheckedChanged += new System.EventHandler(this.CB_Specular_CheckedChanged);
             // 
             // B_GlossinessPicker
             // 
-            this.B_GlossinessPicker.Location = new System.Drawing.Point(212, 159);
+            this.B_GlossinessPicker.Location = new System.Drawing.Point(178, 159);
             this.B_GlossinessPicker.Name = "B_GlossinessPicker";
             this.B_GlossinessPicker.Size = new System.Drawing.Size(75, 23);
             this.B_GlossinessPicker.TabIndex = 24;
+            this.B_GlossinessPicker.Tag = "Glossiness";
             this.B_GlossinessPicker.UseVisualStyleBackColor = true;
             this.B_GlossinessPicker.Click += new System.EventHandler(this.B_GlossinessPicker_Click);
             this.B_GlossinessPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_GlossinessPicker_MouseDown);
@@ -379,20 +391,21 @@
             // CB_Glossiness
             // 
             this.CB_Glossiness.AutoSize = true;
-            this.CB_Glossiness.Location = new System.Drawing.Point(212, 188);
+            this.CB_Glossiness.Location = new System.Drawing.Point(178, 188);
             this.CB_Glossiness.Name = "CB_Glossiness";
             this.CB_Glossiness.Size = new System.Drawing.Size(76, 17);
             this.CB_Glossiness.TabIndex = 12;
+            this.CB_Glossiness.Tag = "Glossiness";
             this.CB_Glossiness.Text = "Glossiness";
             this.CB_Glossiness.UseVisualStyleBackColor = true;
-            this.CB_Glossiness.CheckedChanged += new System.EventHandler(this.CB_Glossiness_CheckedChanged);
             // 
             // B_ReflectionPicker
             // 
-            this.B_ReflectionPicker.Location = new System.Drawing.Point(294, 3);
+            this.B_ReflectionPicker.Location = new System.Drawing.Point(260, 3);
             this.B_ReflectionPicker.Name = "B_ReflectionPicker";
             this.B_ReflectionPicker.Size = new System.Drawing.Size(75, 23);
             this.B_ReflectionPicker.TabIndex = 25;
+            this.B_ReflectionPicker.Tag = "Reflection";
             this.B_ReflectionPicker.UseVisualStyleBackColor = true;
             this.B_ReflectionPicker.Click += new System.EventHandler(this.B_ReflectionPicker_Click);
             this.B_ReflectionPicker.MouseDown += new System.Windows.Forms.MouseEventHandler(this.B_ReflectionPicker_MouseDown);
@@ -400,13 +413,13 @@
             // CB_Reflection
             // 
             this.CB_Reflection.AutoSize = true;
-            this.CB_Reflection.Location = new System.Drawing.Point(294, 32);
+            this.CB_Reflection.Location = new System.Drawing.Point(260, 32);
             this.CB_Reflection.Name = "CB_Reflection";
             this.CB_Reflection.Size = new System.Drawing.Size(74, 17);
             this.CB_Reflection.TabIndex = 9;
+            this.CB_Reflection.Tag = "Reflection";
             this.CB_Reflection.Text = "Reflection";
             this.CB_Reflection.UseVisualStyleBackColor = true;
-            this.CB_Reflection.CheckedChanged += new System.EventHandler(this.CB_Reflection_CheckedChanged);
             // 
             // TxtBx_FileName
             // 
