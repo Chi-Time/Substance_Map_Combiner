@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 
 //TODO: Find a way to possibly make map combining non-locking through async.
+//TODO: Fix memory issues (if that's even possible in C#, maybe consider C++ for this task instead.)
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
 //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
 
@@ -20,6 +21,7 @@ namespace Substance_Map_Combiner
     {
         private string _PreferenceFileLocation = "Preferences.pref";
         private UserPreferences _UserPreferences = null;
+        private ImageCombiner _ImageCombiner = null;
 
         private Dictionary<MapTypes, Map> _Maps = new Dictionary<MapTypes, Map> ();
 
@@ -222,26 +224,81 @@ namespace Substance_Map_Combiner
                 return;
             }
 
-            this.Opacity = 0.75d;
-            CombineImages ();
+            //CombineImagesAsync ();
+            StartThread ();
         }
 
-        private void CombineImages ()
+        private void StartThread ()
+        {
+            backgroundWorker1.RunWorkerAsync ();
+        }
+
+        private void backgroundWorker1_DoWork (object sender, DoWorkEventArgs e)
+        {
+            Console.WriteLine ("Doing Work\n\n");
+            // This event handler is where the actual work is done. 
+            // This method runs on the background thread. 
+
+            // Get the BackgroundWorker object that raised this event.
+            System.ComponentModel.BackgroundWorker worker;
+            worker = (System.ComponentModel.BackgroundWorker)sender;
+
+            // Get the Words object and call the main method.
+            CombineImagesAsync (worker, e);
+        }
+
+        private async Task CombineImagesAsync (System.ComponentModel.BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
         {
             string[] files = GetFiles (_UserPreferences.SourceFolder);
 
             if (files.Length == 0)
                 return;
 
+            // Possibly make it so it's not a foreach loop and go through each map seperately so that memory gets flushed between each map type.
+            // Possibly consider putting it through a secondary form window which opens per map being made and then closes so as to flush the memory.
             foreach (KeyValuePair<MapTypes, Map> map in _Maps)
             {
                 if (map.Value.IsSelected)
                 {
-                    CreateCombinedImageMap (map.Value, files);
+                    if (worker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        break;
+                    }
+                    else
+                    {
+                        //Console.WriteLine (map.Key.ToString () + ": Working");
+                        //var startTime = DateTime.Now;
+
+                        CreateCombinedImageMap (map.Value, files);
+
+                        //var doneTime = DateTime.Now;
+                        //var span = (startTime - doneTime);
+
+                        //Console.WriteLine (map.Key.ToString () + ": Done - Time: " + span);
+
+                        GC.Collect ();
+                        await Task.Delay (2000);
+                        GC.Collect ();
+
+                        //Console.WriteLine (map.Key.ToString () + ": Collected");
+                    }
                 }
             }
 
-            this.Opacity = 1d;
+            MessageBox.Show ("Finished Combining Images");
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
+        {
+            // This event handler is called when the background thread finishes. 
+            // This method runs on the main thread. 
+            if (e.Error != null)
+                MessageBox.Show ("Error: " + e.Error.Message);
+            else if (e.Cancelled)
+                MessageBox.Show ("Image Combining Cancelled.");
+            //else
+            //    MessageBox.Show ("Finished map");
         }
 
         /// <summary>
@@ -272,7 +329,9 @@ namespace Substance_Map_Combiner
 
             if (images != null && Directory.Exists (_UserPreferences.DestinationFolder))
             {
-                ImageCombiner.CombineImages (images[0], images.ToArray (), _UserPreferences.DestinationFolder, mapName, map.BackgroundColor);
+                //TODO: Create this instance at class global as it's a ref type and is bad to re-instantiate every time.
+                _ImageCombiner = new ImageCombiner ();
+                _ImageCombiner.CombineImages (images[0], images.ToArray (), _UserPreferences.DestinationFolder, mapName, map.BackgroundColor);
                 return;
             }
         }
@@ -463,5 +522,47 @@ namespace Substance_Map_Combiner
             string json = UserPreferences.GetJSON (_UserPreferences);
             File.WriteAllText (_PreferenceFileLocation, json);
         }
+
+        private void B_MapOrder_Click (object sender, EventArgs e)
+        {
+            //TODO: Display map order window.
+
+            string[] files = GetFiles (_UserPreferences.SourceFolder);
+
+            List<string> maps = new List<string> ();
+
+            if (files.Length == 0)
+                return;
+
+            foreach (KeyValuePair<MapTypes, Map> map in _Maps)
+            {
+                if (map.Value.IsSelected)
+                {
+                    string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
+                    string mapName = _UserPreferences.ExportFileName + map.Value.OutputSuffix + _UserPreferences.ExportFileType;
+
+                    if (images != null)
+                    {
+                        for (int i = 0; i < images.Length; i++)
+                        {
+                            images[i] = images[i].Replace (_UserPreferences.SourceFolder, "");
+                            maps.Add (images[i]);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            var mapOrder = new Map_Order (this, maps);
+            mapOrder.Show ();
+        }
+
+        public void UpdateCombineOrder (List<string> maps)
+        {
+
+        }
+
+        
     }
 }

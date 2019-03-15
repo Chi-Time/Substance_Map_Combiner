@@ -65,6 +65,8 @@
             this.TSMI_Preferences = new System.Windows.Forms.ToolStripMenuItem();
             this.L_Log = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.B_MapOrder = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -109,7 +111,7 @@
             this.B_Combine_Images.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.B_Combine_Images.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B_Combine_Images.ForeColor = System.Drawing.SystemColors.Control;
-            this.B_Combine_Images.Location = new System.Drawing.Point(304, 243);
+            this.B_Combine_Images.Location = new System.Drawing.Point(450, 243);
             this.B_Combine_Images.Name = "B_Combine_Images";
             this.B_Combine_Images.Size = new System.Drawing.Size(140, 37);
             this.B_Combine_Images.TabIndex = 2;
@@ -560,12 +562,34 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Output:";
             // 
+            // B_MapOrder
+            // 
+            this.B_MapOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(54)))), ((int)(((byte)(65)))));
+            this.B_MapOrder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.B_MapOrder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(41)))), ((int)(((byte)(50)))));
+            this.B_MapOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_MapOrder.Font = new System.Drawing.Font("Arial Rounded MT Bold", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.B_MapOrder.ForeColor = System.Drawing.SystemColors.Control;
+            this.B_MapOrder.Location = new System.Drawing.Point(304, 243);
+            this.B_MapOrder.Name = "B_MapOrder";
+            this.B_MapOrder.Size = new System.Drawing.Size(140, 37);
+            this.B_MapOrder.TabIndex = 8;
+            this.B_MapOrder.Text = "Map Order";
+            this.B_MapOrder.UseVisualStyleBackColor = false;
+            this.B_MapOrder.Click += new System.EventHandler(this.B_MapOrder_Click);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(54)))), ((int)(((byte)(63)))));
             this.ClientSize = new System.Drawing.Size(614, 299);
+            this.Controls.Add(this.B_MapOrder);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.L_Log);
             this.Controls.Add(this.CB_FileType);
@@ -629,6 +653,8 @@
         private System.Windows.Forms.ToolStripMenuItem TSMI_Preferences;
         private System.Windows.Forms.Label L_Log;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button B_MapOrder;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
