@@ -267,21 +267,21 @@ namespace Substance_Map_Combiner
                     }
                     else
                     {
-                        //Console.WriteLine (map.Key.ToString () + ": Working");
-                        //var startTime = DateTime.Now;
+                        Console.WriteLine (map.Key.ToString () + ": Working");
+                        var startTime = DateTime.Now;
 
                         CreateCombinedImageMap (map.Value, files);
 
-                        //var doneTime = DateTime.Now;
-                        //var span = (startTime - doneTime);
+                        var doneTime = DateTime.Now;
+                        var span = (startTime - doneTime);
 
-                        //Console.WriteLine (map.Key.ToString () + ": Done - Time: " + span);
+                        Console.WriteLine (map.Key.ToString () + ": Done - Time: " + span);
 
                         GC.Collect ();
                         await Task.Delay (2000);
                         GC.Collect ();
 
-                        //Console.WriteLine (map.Key.ToString () + ": Collected");
+                        Console.WriteLine (map.Key.ToString () + ": Collected");
                     }
                 }
             }
