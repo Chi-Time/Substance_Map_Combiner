@@ -14,13 +14,14 @@ namespace Substance_Map_Combiner
         AO,
         IOR,
         Normal,
-        NormalDX,
+        Normal_DirectX,
         Height,
         Emissive,
         Reflection,
         Diffuse,
         Specular,
         Glossiness,
-        Displacement
+        Displacement,
+        Mixed_AO,
     }
 }

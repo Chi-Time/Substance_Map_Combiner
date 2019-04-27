@@ -16,28 +16,30 @@ namespace Substance_Map_Combiner
 	public class FolderSelectDialog
 	{
 		// Wrapped dialog
-		System.Windows.Forms.OpenFileDialog ofd = null;
+		OpenFileDialog ofd = null;
 
 		/// <summary>
 		/// Default constructor
 		/// </summary>
 		public FolderSelectDialog()
 		{
-			ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd = new OpenFileDialog
+            {
+                //ofd.Filter = "Folders|\n";
+                Filter = "All files (*.*)|*.*",
+                AddExtension = false,
+                CheckFileExists = false,
+                DereferenceLinks = true,
+                Multiselect = false
+            };
+        }
 
-			ofd.Filter = "Folders|\n";
-			ofd.AddExtension = false;
-			ofd.CheckFileExists = false;
-			ofd.DereferenceLinks = true;
-			ofd.Multiselect = false;
-		}
+        #region Properties
 
-		#region Properties
-
-		/// <summary>
-		/// Gets/Sets the initial folder to be selected. A null value selects the current directory.
-		/// </summary>
-		public string InitialDirectory
+        /// <summary>
+        /// Gets/Sets the initial folder to be selected. A null value selects the current directory.
+        /// </summary>
+        public string InitialDirectory
 		{
 			get { return ofd.InitialDirectory; }
 			set { ofd.InitialDirectory = value == null || value.Length == 0 ? Environment.CurrentDirectory : value; }
@@ -115,7 +117,7 @@ namespace Substance_Map_Combiner
 				var fbd = new FolderBrowserDialog();
 				fbd.Description = this.Title;
 				fbd.SelectedPath = this.InitialDirectory;
-				fbd.ShowNewFolderButton = false;
+				fbd.ShowNewFolderButton = true;
 				if (fbd.ShowDialog(new WindowWrapper(hWndOwner)) != DialogResult.OK) return false;
 				ofd.FileName = fbd.SelectedPath;
 				flag = true;

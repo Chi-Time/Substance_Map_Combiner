@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 //TODO: Find a way to possibly make map combining non-locking through async.
 //TODO: Fix memory issues (if that's even possible in C#, maybe consider C++ for this task instead.)
@@ -53,13 +54,15 @@ namespace Substance_Map_Combiner
             AddNewMap (MapTypes.AO, "_Ambient_occlusion", Color.White);
             AddNewMap (MapTypes.IOR, "_IOR", Color.WhiteSmoke);
             AddNewMap (MapTypes.Normal, "_Normal", Color.FromArgb (128, 128, 255));
-            AddNewMap (MapTypes.NormalDX, "_NormalDX", Color.FromArgb (128, 128, 255));
+            AddNewMap (MapTypes.Normal_DirectX, "_Normal_DirectX", Color.FromArgb (128, 128, 255));
             AddNewMap (MapTypes.Height, "_Height", Color.DarkGray);
             AddNewMap (MapTypes.Emissive, "_Emissive", Color.WhiteSmoke);
             AddNewMap (MapTypes.Reflection, "_Reflection", Color.WhiteSmoke);
             AddNewMap (MapTypes.Diffuse, "_Diffuse", Color.WhiteSmoke);
             AddNewMap (MapTypes.Specular, "_Specular", Color.WhiteSmoke);
             AddNewMap (MapTypes.Glossiness, "_Glossiness", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Displacement, "_Displacement", Color.WhiteSmoke);
+            AddNewMap (MapTypes.Mixed_AO, "_Mixed_AO", Color.DarkGray);
 
             _UserPreferences = new UserPreferences
             {
@@ -113,14 +116,21 @@ namespace Substance_Map_Combiner
 
         private void B_Source_Folder_Button_Click (object sender, EventArgs e)
         {
-            var fileDialog = new FolderSelectDialog ()
+            var fileDialog = new OpenFileDialog
             {
-                InitialDirectory = _UserPreferences.SourceFolder
+                // Set validate names and check file exists to false otherwise windows will
+                // not let you select "Folder Selection."
+                ValidateNames = false,
+                CheckFileExists = false,
+                CheckPathExists = true,
+                Title = "Source Folder Select",
+                InitialDirectory = _UserPreferences.DestinationFolder,
+                FileName = "Select Folder"
             };
 
-            if (fileDialog.ShowDialog ())
+            if (fileDialog.ShowDialog () == DialogResult.OK)
             {
-                _UserPreferences.SourceFolder = fileDialog.FileName;
+                _UserPreferences.SourceFolder = Path.GetDirectoryName (fileDialog.FileName);
                 CheckFolderFiles (_UserPreferences.SourceFolder);
             }
         }
@@ -193,14 +203,21 @@ namespace Substance_Map_Combiner
 
         private void B_Destination_Folder_Click (object sender, EventArgs e)
         {
-            var fileDialog = new FolderSelectDialog ()
+            var fileDialog = new OpenFileDialog
             {
-                InitialDirectory = _UserPreferences.DestinationFolder
+                // Set validate names and check file exists to false otherwise windows will
+                // not let you select "Folder Selection."
+                ValidateNames = false,
+                CheckFileExists = false,
+                CheckPathExists = true,
+                Title = "Destination Folder Select",
+                InitialDirectory = _UserPreferences.DestinationFolder,
+                FileName = "Select Folder"
             };
 
-            if (fileDialog.ShowDialog ())
+            if (fileDialog.ShowDialog () == DialogResult.OK)
             {
-                _UserPreferences.DestinationFolder = fileDialog.FileName;
+                _UserPreferences.DestinationFolder = Path.GetDirectoryName (fileDialog.FileName);
             }
         }
 

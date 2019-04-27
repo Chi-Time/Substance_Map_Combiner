@@ -112,7 +112,7 @@ namespace Substance_Map_Combiner
 
                     if (IsSuffixType (text, "NormalDX"))
                     {
-                        _CurrentMapType = MapTypes.NormalDX;
+                        _CurrentMapType = MapTypes.Normal_DirectX;
                         UpdateTextBoxes ();
                     }
 
