@@ -24,6 +24,7 @@ namespace Substance_Map_Combiner
         private UserPreferences _UserPreferences = null;
         private ImageCombiner _ImageCombiner = null;
 
+        private readonly BackgroundWorker _Worker = null;
         private Dictionary<MapTypes, Map> _Maps = new Dictionary<MapTypes, Map> ();
 
         public MainWindow ()
@@ -44,6 +45,12 @@ namespace Substance_Map_Combiner
                     _Maps = _UserPreferences.Maps;
                 }
             }
+
+            _Worker = new BackgroundWorker ();
+            _Worker.WorkerReportsProgress = true;
+            _Worker.DoWork += CombineImagesAsync;
+            _Worker.ProgressChanged += worker_ProgressChanged;
+            _Worker.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
 
         private void InitialiseDefaultPreferences ()
@@ -90,14 +97,14 @@ namespace Substance_Map_Combiner
             SetupCheckBoxEvents ();
             SetupButtonClickEvents ();
             UpdateColorButtons ();
-
+            
             TxtBx_FileName.Text = _UserPreferences.ExportFileName;
             CB_FileType.Text = _UserPreferences.ExportFileType;
         }
 
         private void UpdateColorButtons ()
         {
-            foreach (var control in flowLayoutPanel1.Controls)
+            foreach (object control in flowLayoutPanel1.Controls)
             {
                 if (control is Button button)
                 {
@@ -240,9 +247,8 @@ namespace Substance_Map_Combiner
                 MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            //CombineImagesAsync ();
-            StartThread ();
+            _Worker.RunWorkerAsync ();
+            B_Combine_Images.Enabled = false;
         }
 
         private void StartThread ()
@@ -250,23 +256,10 @@ namespace Substance_Map_Combiner
             backgroundWorker1.RunWorkerAsync ();
         }
 
-        private void backgroundWorker1_DoWork (object sender, DoWorkEventArgs e)
-        {
-            Console.WriteLine ("Doing Work\n\n");
-            // This event handler is where the actual work is done. 
-            // This method runs on the background thread. 
-
-            // Get the BackgroundWorker object that raised this event.
-            System.ComponentModel.BackgroundWorker worker;
-            worker = (System.ComponentModel.BackgroundWorker)sender;
-
-            // Get the Words object and call the main method.
-            CombineImagesAsync (worker, e);
-        }
-
-        private async Task CombineImagesAsync (System.ComponentModel.BackgroundWorker worker, System.ComponentModel.DoWorkEventArgs e)
+        private void CombineImagesAsync (object sender, DoWorkEventArgs e)
         {
             string[] files = GetFiles (_UserPreferences.SourceFolder);
+            var worker = (BackgroundWorker)sender;
 
             if (files.Length == 0)
                 return;
@@ -284,38 +277,50 @@ namespace Substance_Map_Combiner
                     }
                     else
                     {
-                        Console.WriteLine (map.Key.ToString () + ": Working");
-                        var startTime = DateTime.Now;
-
-                        CreateCombinedImageMap (map.Value, files);
-
-                        var doneTime = DateTime.Now;
-                        var span = (startTime - doneTime);
-
-                        Console.WriteLine (map.Key.ToString () + ": Done - Time: " + span);
-
-                        GC.Collect ();
-                        await Task.Delay (2000);
-                        GC.Collect ();
-
-                        Console.WriteLine (map.Key.ToString () + ": Collected");
+                        CreateMap (files, map.Key, map.Value, worker).GetAwaiter ();
                     }
                 }
             }
-
-            MessageBox.Show ("Finished Combining Images");
         }
 
-        private void backgroundWorker1_RunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
+        private async Task CreateMap (string[] files, MapTypes mapType, Map map, BackgroundWorker worker)
+        {
+            Console.WriteLine (mapType.ToString () + ": Working");
+            var startTime = DateTime.Now;
+            worker.ReportProgress (0, mapType.ToString () + ": Working");
+
+            CreateCombinedImageMap (map, files);
+
+            var doneTime = DateTime.Now;
+            var span = (startTime - doneTime);
+
+            Console.WriteLine (mapType.ToString () + ": Done - Time: " + span.ToString(@"hh\:mm\:ss\.ff") + "\n");
+            worker.ReportProgress (100, mapType.ToString () + ": Done - Time: " + span.ToString (@"hh\:mm\:ss\.ff") + "\n");
+
+            GC.Collect ();
+            await Task.Delay (2000);
+            GC.Collect ();
+
+            //Console.WriteLine (mapType.ToString () + ": Collected");
+        }
+
+        private void worker_ProgressChanged (object sender, ProgressChangedEventArgs e)
+        {
+            Lbl_ConsoleText.Text += e.UserState.ToString () + "\n";
+        }
+
+        private void worker_RunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
         {
             // This event handler is called when the background thread finishes. 
-            // This method runs on the main thread. 
+            // This method runs on the main thread.
             if (e.Error != null)
                 MessageBox.Show ("Error: " + e.Error.Message);
             else if (e.Cancelled)
                 MessageBox.Show ("Image Combining Cancelled.");
-            //else
-            //    MessageBox.Show ("Finished map");
+            else
+                MessageBox.Show ("Finished Combining Images");
+
+            B_Combine_Images.Enabled = true;
         }
 
         /// <summary>
@@ -346,7 +351,6 @@ namespace Substance_Map_Combiner
 
             if (images != null && Directory.Exists (_UserPreferences.DestinationFolder))
             {
-                //TODO: Create this instance at class global as it's a ref type and is bad to re-instantiate every time.
                 _ImageCombiner = new ImageCombiner ();
                 _ImageCombiner.CombineImages (images[0], images.ToArray (), _UserPreferences.DestinationFolder, mapName, map.BackgroundColor);
                 return;
@@ -579,7 +583,5 @@ namespace Substance_Map_Combiner
         {
 
         }
-
-        
     }
 }

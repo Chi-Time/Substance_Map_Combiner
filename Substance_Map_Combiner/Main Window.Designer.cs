@@ -67,8 +67,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.B_MapOrder = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.FLP_Console = new System.Windows.Forms.FlowLayoutPanel();
+            this.Lbl_ConsoleText = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.FLP_Console.SuspendLayout();
             this.SuspendLayout();
             // 
             // B_Source_Folder_Button
@@ -313,7 +316,7 @@
             this.B_NormalDXPicker.Name = "B_NormalDXPicker";
             this.B_NormalDXPicker.Size = new System.Drawing.Size(95, 23);
             this.B_NormalDXPicker.TabIndex = 19;
-            this.B_NormalDXPicker.Tag = "NormalDX";
+            this.B_NormalDXPicker.Tag = "Normal_DirectX";
             this.B_NormalDXPicker.UseVisualStyleBackColor = false;
             // 
             // CB_NormalDX
@@ -325,7 +328,7 @@
             this.CB_NormalDX.Name = "CB_NormalDX";
             this.CB_NormalDX.Size = new System.Drawing.Size(101, 16);
             this.CB_NormalDX.TabIndex = 6;
-            this.CB_NormalDX.Tag = "NormalDX";
+            this.CB_NormalDX.Tag = "Normal_DirectX";
             this.CB_NormalDX.Text = "Normal (DX)";
             this.CB_NormalDX.UseVisualStyleBackColor = true;
             // 
@@ -578,17 +581,34 @@
             this.B_MapOrder.UseVisualStyleBackColor = false;
             this.B_MapOrder.Click += new System.EventHandler(this.B_MapOrder_Click);
             // 
-            // backgroundWorker1
+            // FLP_Console
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.FLP_Console.AutoScroll = true;
+            this.FLP_Console.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(36)))), ((int)(((byte)(42)))));
+            this.FLP_Console.Controls.Add(this.Lbl_ConsoleText);
+            this.FLP_Console.Location = new System.Drawing.Point(15, 295);
+            this.FLP_Console.Name = "FLP_Console";
+            this.FLP_Console.Size = new System.Drawing.Size(575, 135);
+            this.FLP_Console.TabIndex = 10;
+            // 
+            // Lbl_ConsoleText
+            // 
+            this.Lbl_ConsoleText.AutoSize = true;
+            this.Lbl_ConsoleText.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_ConsoleText.ForeColor = System.Drawing.Color.GreenYellow;
+            this.Lbl_ConsoleText.Location = new System.Drawing.Point(15, 15);
+            this.Lbl_ConsoleText.Margin = new System.Windows.Forms.Padding(15, 15, 3, 0);
+            this.Lbl_ConsoleText.Name = "Lbl_ConsoleText";
+            this.Lbl_ConsoleText.Size = new System.Drawing.Size(0, 16);
+            this.Lbl_ConsoleText.TabIndex = 0;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(54)))), ((int)(((byte)(63)))));
-            this.ClientSize = new System.Drawing.Size(614, 299);
+            this.ClientSize = new System.Drawing.Size(614, 442);
+            this.Controls.Add(this.FLP_Console);
             this.Controls.Add(this.B_MapOrder);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.L_Log);
@@ -609,6 +629,8 @@
             this.flowLayoutPanel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.FLP_Console.ResumeLayout(false);
+            this.FLP_Console.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -655,6 +677,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button B_MapOrder;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.FlowLayoutPanel FLP_Console;
+        private System.Windows.Forms.Label Lbl_ConsoleText;
     }
 }
 
