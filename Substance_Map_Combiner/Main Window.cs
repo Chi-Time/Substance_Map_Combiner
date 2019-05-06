@@ -43,6 +43,7 @@ namespace Substance_Map_Combiner
                 if (_UserPreferences != null)
                 {
                     _Maps = _UserPreferences.Maps;
+                    CheckFolderFiles (_UserPreferences.SourceFolder);
                 }
             }
 
@@ -166,10 +167,25 @@ namespace Substance_Map_Combiner
             if (files.Length == 0)
                 return;
 
+            ClearAppSelection ();
+
             // Loop through every map type.
             foreach (KeyValuePair<MapTypes, Map> map in _Maps)
             {
                 PreselectImagesFromFolder (map, files);
+            }
+        }
+
+        private void ClearAppSelection ()
+        {
+            // Reset all map selections in the client.
+            foreach (KeyValuePair<MapTypes, Map> map in _Maps)
+            {
+                map.Value.IsSelected = false;
+                var checkBox = GetCheckBoxFromMapType (map.Key);
+
+                if (checkBox != null)
+                    checkBox.Checked = false;
             }
         }
 
@@ -582,6 +598,11 @@ namespace Substance_Map_Combiner
         public void UpdateCombineOrder (List<string> maps)
         {
 
+        }
+
+        private void clearToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+            ClearAppSelection ();
         }
     }
 }
