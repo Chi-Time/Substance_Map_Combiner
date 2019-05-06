@@ -131,7 +131,7 @@ namespace Substance_Map_Combiner
                 CheckFileExists = false,
                 CheckPathExists = true,
                 Title = "Source Folder Select",
-                InitialDirectory = _UserPreferences.DestinationFolder,
+                InitialDirectory = _UserPreferences.SourceFolder,
                 FileName = "Select Folder"
             };
 
