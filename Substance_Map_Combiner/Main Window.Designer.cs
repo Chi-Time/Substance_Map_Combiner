@@ -65,7 +65,7 @@
             this.TSMI_Preferences = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_About = new System.Windows.Forms.ToolStripMenuItem();
             this.L_Log = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.B_MapOrder = new System.Windows.Forms.Button();
@@ -562,19 +562,20 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
+            this.TSMI_About});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // aboutToolStripMenuItem
+            // TSMI_About
             // 
-            this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(42)))), ((int)(((byte)(49)))));
-            this.aboutToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.TSMI_About.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(42)))), ((int)(((byte)(49)))));
+            this.TSMI_About.ForeColor = System.Drawing.SystemColors.Control;
+            this.TSMI_About.Name = "TSMI_About";
+            this.TSMI_About.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_About.Text = "About";
+            this.TSMI_About.Click += new System.EventHandler(this.TSMI_About_Click);
             // 
             // L_Log
             // 
@@ -716,7 +717,7 @@
         private System.Windows.Forms.FlowLayoutPanel FLP_Console;
         private System.Windows.Forms.Label Lbl_ConsoleText;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_About;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
     }
 }

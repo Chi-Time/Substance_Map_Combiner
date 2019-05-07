@@ -571,6 +571,16 @@ namespace Substance_Map_Combiner
             preferenceWindow.ShowDialog (this);
         }
 
+        private void TSMI_About_Click (object sender, EventArgs e)
+        {
+            MessageBox.Show ("Substance Map Combiner is a free program created by James Johnson. https://github.com/Chi-Time \nIf any issues or suggestions are found please go here: https://github.com/Chi-Time/Substance_Map_Combiner", "About", MessageBoxButtons.OK);
+        }
+
+        private void clearToolStripMenuItem_Click (object sender, EventArgs e)
+        {
+            ClearAppSelection ();
+        }
+
         private void MainWindow_FormClosing (object sender, FormClosingEventArgs e)
         {
             SavePreferences ();
@@ -591,11 +601,6 @@ namespace Substance_Map_Combiner
         {
             var mapOrder = new Map_Order (_MapSegments, _UserPreferences);
             mapOrder.ShowDialog (this);
-        }
-
-        private void clearToolStripMenuItem_Click (object sender, EventArgs e)
-        {
-            ClearAppSelection ();
         }
 
         private void MainWindow_KeyDown (object sender, KeyEventArgs e)
