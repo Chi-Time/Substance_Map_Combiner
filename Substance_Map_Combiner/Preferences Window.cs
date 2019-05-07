@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Substance_Map_Combiner
 {
+    //TODO: Fill drop-down dynamically by reading from map types and preferences look at map order's implementation.
     public partial class Preferences_Window : Form
     {
         private UserPreferences _UserPrefences = null;

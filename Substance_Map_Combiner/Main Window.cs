@@ -5,11 +5,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using Microsoft.WindowsAPICodePack.Dialogs;
 
 //TODO: Fix memory issues (if that's even possible in C#, maybe consider C++ for this task instead.)
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
