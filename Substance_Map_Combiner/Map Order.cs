@@ -1,37 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Substance_Map_Combiner
 {
     public partial class Map_Order : Form
     {
-        private MainWindow _Caller = null;
-        private List<string> _Maps = new List<string> ();
         private UserPreferences _UserPreferences = null;
-        private Dictionary<MapTypes, Map> _MapsYeah = null;
+        private List<string> _Maps = new List<string> ();
         private Dictionary<MapTypes, string[]> _MapSegments = null;
 
-        public Map_Order (MainWindow caller, List<string> maps)
+        public Map_Order (Dictionary<MapTypes, string[]> maps, UserPreferences userPreferences)
         {
             InitializeComponent ();
 
-            _Caller = caller;
-            _Maps = maps;
-        }
-
-        public Map_Order (MainWindow caller, Dictionary<MapTypes, string[]> maps, Dictionary<MapTypes, Map> mapsYeah, UserPreferences userPreferences)
-        {
-            InitializeComponent ();
-
-            _Caller = caller;
-            _MapsYeah = mapsYeah;
             _MapSegments = maps;
             _UserPreferences = userPreferences;
 
@@ -56,31 +40,6 @@ namespace Substance_Map_Combiner
             var firstElememt = _MapSegments.First ();
             DisplayMapList (firstElememt.Value);
             CB_MapTypes.Text = firstElememt.Key.ToString ();
-            //string[] fileTypes = new string[] { ".jpe", ".bmp", ".rle", ".dds", ".dib", "pxr", "pns", ".jpg", ".jpeg", ".png", ".tga", ".tiff", ".tif", ".gif"};
-
-            ////TODO: Don't rely on base-color as it may not be present for some map combinations. 
-            //// Try instead to find the map type with the highest amount of images within it.
-            //foreach (string image in _MapSegments[MapTypes.BaseColor])
-            //{
-            //    // Remove filepath from name and trailing backslash.
-            //    var imageName = image.Replace (_UserPreferences.SourceFolder, "");
-            //    imageName = imageName.Remove (0, 1);
-                
-            //    // Remove whatever possible suffix the user has for their map types.
-            //    foreach (string suffix in _MapsYeah[MapTypes.BaseColor].Suffixes)
-            //    {
-            //        imageName = imageName.Replace (suffix, "");
-            //    }
-
-            //    // Remove what the original filetype is from the string.
-            //    foreach (string fileType in fileTypes)
-            //    {
-            //        imageName = imageName.Replace (fileType, "");
-            //    }
-
-            //    // Add these images to the list for ordering.
-            //    LBX_MapOrder.Items.Add (imageName);
-            //}
         }
 
         //TODO: Better understand and document what this is doing - https://stackoverflow.com/questions/805165/reorder-a-winforms-listbox-using-drag-and-drop
@@ -108,37 +67,6 @@ namespace Substance_Map_Combiner
 
         private void B_Accept_Click (object sender, EventArgs e)
         {
-            //foreach (var thing in _Maps)
-            //{
-            //    Console.WriteLine ("Thing: " + thing);
-            //}
-
-            //foreach (KeyValuePair<MapTypes, string[]> map in _MapSegments)
-            //{
-            //    var indexes = new List<int> ();
-
-            //    foreach (string image in map.Value)
-            //    {
-            //        for (int i = 0; i < _Maps.Count; i++)
-            //        {
-            //            if (image.Contains (_Maps[i]))
-            //            {
-            //                indexes.Add (i);
-            //                //Console.WriteLine (image + " | " + _Maps[i]);
-            //            }
-            //        }
-            //    }
-
-            //    Console.WriteLine ($"REORDERING: {map.Key.ToString ()} \n \n \n");
-
-            //    reorder (map.Value, indexes.ToArray ());
-
-            //    foreach (string image in map.Value)
-            //    {
-            //        Console.WriteLine (image);
-            //    }
-            //}
-
             this.Close ();
         }
 
@@ -214,12 +142,6 @@ namespace Substance_Map_Combiner
             }
         }
 
-
-        private void B_Cancel_Click (object sender, EventArgs e)
-        {
-            this.Close ();
-        }
-
         private void CB_MapTypes_SelectedIndexChanged (object sender, EventArgs e)
         {
             if (sender is ComboBox comboBox)
@@ -258,10 +180,3 @@ namespace Substance_Map_Combiner
         }
     }
 }
-
-/*
- * Foreach map segment.
- * Check if the current segment matches with the given one.
- * If it does, note the index.
- * Apply this new index order to all of the maps.
- */

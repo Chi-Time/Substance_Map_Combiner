@@ -30,7 +30,6 @@
         {
             this.LBX_MapOrder = new System.Windows.Forms.ListBox();
             this.B_Accept = new System.Windows.Forms.Button();
-            this.B_Cancel = new System.Windows.Forms.Button();
             this.CB_MapTypes = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
@@ -56,16 +55,6 @@
             this.B_Accept.UseVisualStyleBackColor = true;
             this.B_Accept.Click += new System.EventHandler(this.B_Accept_Click);
             // 
-            // B_Cancel
-            // 
-            this.B_Cancel.Location = new System.Drawing.Point(93, 415);
-            this.B_Cancel.Name = "B_Cancel";
-            this.B_Cancel.Size = new System.Drawing.Size(75, 23);
-            this.B_Cancel.TabIndex = 2;
-            this.B_Cancel.Text = "Cancel";
-            this.B_Cancel.UseVisualStyleBackColor = true;
-            this.B_Cancel.Click += new System.EventHandler(this.B_Cancel_Click);
-            // 
             // CB_MapTypes
             // 
             this.CB_MapTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -82,10 +71,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(427, 450);
             this.Controls.Add(this.CB_MapTypes);
-            this.Controls.Add(this.B_Cancel);
             this.Controls.Add(this.B_Accept);
             this.Controls.Add(this.LBX_MapOrder);
             this.Name = "Map_Order";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Map_Order";
             this.Load += new System.EventHandler(this.Map_Order_Load);
             this.ResumeLayout(false);
@@ -96,7 +85,6 @@
 
         private System.Windows.Forms.ListBox LBX_MapOrder;
         private System.Windows.Forms.Button B_Accept;
-        private System.Windows.Forms.Button B_Cancel;
         private System.Windows.Forms.ComboBox CB_MapTypes;
     }
 }

@@ -551,8 +551,7 @@ namespace Substance_Map_Combiner
         private void TSMI_Preferences_Click (object sender, EventArgs e)
         {
             var preferenceWindow = new Preferences_Window (_UserPreferences);
-
-            preferenceWindow.Show (this);
+            preferenceWindow.ShowDialog (this);
         }
 
         private void MainWindow_FormClosing (object sender, FormClosingEventArgs e)
@@ -568,56 +567,8 @@ namespace Substance_Map_Combiner
 
         private void B_MapOrder_Click (object sender, EventArgs e)
         {
-
-            ////TODO: Display map order window.
-
-            //string[] files = GetFiles (_UserPreferences.SourceFolder);
-
-            //List<string> maps = new List<string> ();
-
-            //if (files.Length == 0)
-            //    return;
-
-            //foreach (KeyValuePair<MapTypes, Map> map in _Maps)
-            //{
-            //    if (map.Value.IsSelected)
-            //    {
-            //        string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
-            //        string mapName = _UserPreferences.ExportFileName + map.Value.OutputSuffix + _UserPreferences.ExportFileType;
-
-            //        if (images != null)
-            //        {
-            //            for (int i = 0; i < images.Length; i++)
-            //            {
-            //                images[i] = images[i].Replace (_UserPreferences.SourceFolder, "");
-            //                maps.Add (images[i]);
-            //            }
-
-            //            break;
-            //        }
-            //    }
-            //}
-
-            //foreach (KeyValuePair<MapTypes, string[]> map in _MapSegments)
-            //{
-            //    Console.WriteLine (map.Key.ToString ());
-            //    Console.WriteLine (map.Value);
-            //    foreach (string image in map.Value)
-            //    {
-            //        Console.WriteLine (image);
-            //    }
-
-            //    Console.WriteLine ("\n");
-            //}
-
-            var mapOrder = new Map_Order (this, _MapSegments, _Maps, _UserPreferences);
-            //var mapOrder = new Map_Order (this, maps);
-            mapOrder.Show ();
-        }
-
-        public void UpdateCombineOrder (List<string> maps)
-        {
-
+            var mapOrder = new Map_Order (_MapSegments, _UserPreferences);
+            mapOrder.ShowDialog (this);
         }
 
         private void clearToolStripMenuItem_Click (object sender, EventArgs e)
