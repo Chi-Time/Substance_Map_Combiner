@@ -161,11 +161,10 @@ namespace Substance_Map_Combiner
         private void CheckFolderFiles (string folder)
         {
             string[] files = GetFiles (folder);
+            ClearAppSelection ();
 
             if (files.Length == 0)
                 return;
-
-            ClearAppSelection ();
 
             // Loop through every map type.
             foreach (KeyValuePair<MapTypes, Map> map in _Maps)
@@ -187,6 +186,7 @@ namespace Substance_Map_Combiner
             }
 
             _MapSegments.Clear ();
+            B_MapOrder.Enabled = false;
         }
 
         private void PreselectImagesFromFolder (KeyValuePair<MapTypes, Map> map, string[] files)
@@ -198,7 +198,10 @@ namespace Substance_Map_Combiner
             // If it's suffix can be found then perform more logic as it's in the folder.
             if (images != null)
             {
+                // Grab all images for each map type.
                 _MapSegments.Add (map.Key, images);
+                // Enable map order button as images have been selected.
+                B_MapOrder.Enabled = true;
 
                 // Set the map to be selected as it's in the folder.
                 map.Value.IsSelected = true;

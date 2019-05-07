@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Substance_Map_Combiner
 {
+    //TODO: Stop application from crashing when user has cleared all maps but clicks map order. Maybe disable map order button until there are items selected.
     public partial class Map_Order : Form
     {
         private UserPreferences _UserPreferences = null;
