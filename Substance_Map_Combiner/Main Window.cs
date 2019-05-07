@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
-//TODO: Find a way to possibly make map combining non-locking through async.
 //TODO: Fix memory issues (if that's even possible in C#, maybe consider C++ for this task instead.)
 //TODO: Refactor this whole thing by making the buttons generate on setup and make them part of the map profile. 
 //That way, we can keep them under one accessible array/list/dictionary. Think of the hentai steam client.
@@ -26,6 +25,7 @@ namespace Substance_Map_Combiner
 
         private readonly BackgroundWorker _Worker = null;
         private Dictionary<MapTypes, Map> _Maps = new Dictionary<MapTypes, Map> ();
+        private Dictionary<MapTypes, string[]> _MapSegments = new Dictionary<MapTypes, string[]> ();
 
         public MainWindow ()
         {
@@ -187,6 +187,8 @@ namespace Substance_Map_Combiner
                 if (checkBox != null)
                     checkBox.Checked = false;
             }
+
+            _MapSegments.Clear ();
         }
 
         private void PreselectImagesFromFolder (KeyValuePair<MapTypes, Map> map, string[] files)
@@ -194,9 +196,12 @@ namespace Substance_Map_Combiner
             // Determine if the map type is in the current image list by filtering if it's suffix can be found.
             string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
 
+            //_MapSegments.Clear ();
             // If it's suffix can be found then perform more logic as it's in the folder.
             if (images != null)
             {
+                _MapSegments.Add (map.Key, images);
+
                 // Set the map to be selected as it's in the folder.
                 map.Value.IsSelected = true;
 
@@ -305,7 +310,7 @@ namespace Substance_Map_Combiner
             var startTime = DateTime.Now;
             worker.ReportProgress (0, mapType.ToString () + ": Working");
 
-            CreateCombinedImageMap (map, files);
+            CreateCombinedImageMap (mapType, map, files);
 
             var doneTime = DateTime.Now;
             var span = (startTime - doneTime);
@@ -360,9 +365,10 @@ namespace Substance_Map_Combiner
             return new string[0];
         }
 
-        private void CreateCombinedImageMap (Map map, string[] files)
+        private void CreateCombinedImageMap (MapTypes mapType, Map map, string[] files)
         {
-            string[] images = GetFilesWithSuffix (map.Suffixes, files);
+            //string[] images = GetFilesWithSuffix (map.Suffixes, files);
+            string[] images = _MapSegments[mapType];
             string mapName = _UserPreferences.ExportFileName + map.OutputSuffix + _UserPreferences.ExportFileType;
 
             if (images != null && Directory.Exists (_UserPreferences.DestinationFolder))
@@ -562,36 +568,50 @@ namespace Substance_Map_Combiner
 
         private void B_MapOrder_Click (object sender, EventArgs e)
         {
-            //TODO: Display map order window.
 
-            string[] files = GetFiles (_UserPreferences.SourceFolder);
+            ////TODO: Display map order window.
 
-            List<string> maps = new List<string> ();
+            //string[] files = GetFiles (_UserPreferences.SourceFolder);
 
-            if (files.Length == 0)
-                return;
+            //List<string> maps = new List<string> ();
 
-            foreach (KeyValuePair<MapTypes, Map> map in _Maps)
-            {
-                if (map.Value.IsSelected)
-                {
-                    string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
-                    string mapName = _UserPreferences.ExportFileName + map.Value.OutputSuffix + _UserPreferences.ExportFileType;
+            //if (files.Length == 0)
+            //    return;
 
-                    if (images != null)
-                    {
-                        for (int i = 0; i < images.Length; i++)
-                        {
-                            images[i] = images[i].Replace (_UserPreferences.SourceFolder, "");
-                            maps.Add (images[i]);
-                        }
+            //foreach (KeyValuePair<MapTypes, Map> map in _Maps)
+            //{
+            //    if (map.Value.IsSelected)
+            //    {
+            //        string[] images = GetFilesWithSuffix (map.Value.Suffixes, files);
+            //        string mapName = _UserPreferences.ExportFileName + map.Value.OutputSuffix + _UserPreferences.ExportFileType;
 
-                        break;
-                    }
-                }
-            }
+            //        if (images != null)
+            //        {
+            //            for (int i = 0; i < images.Length; i++)
+            //            {
+            //                images[i] = images[i].Replace (_UserPreferences.SourceFolder, "");
+            //                maps.Add (images[i]);
+            //            }
 
-            var mapOrder = new Map_Order (this, maps);
+            //            break;
+            //        }
+            //    }
+            //}
+
+            //foreach (KeyValuePair<MapTypes, string[]> map in _MapSegments)
+            //{
+            //    Console.WriteLine (map.Key.ToString ());
+            //    Console.WriteLine (map.Value);
+            //    foreach (string image in map.Value)
+            //    {
+            //        Console.WriteLine (image);
+            //    }
+
+            //    Console.WriteLine ("\n");
+            //}
+
+            var mapOrder = new Map_Order (this, _MapSegments, _Maps, _UserPreferences);
+            //var mapOrder = new Map_Order (this, maps);
             mapOrder.Show ();
         }
 
