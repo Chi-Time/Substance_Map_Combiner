@@ -89,10 +89,12 @@
             this.Controls.Add(this.CB_MapTypes);
             this.Controls.Add(this.B_Accept);
             this.Controls.Add(this.LBX_MapOrder);
+            this.KeyPreview = true;
             this.Name = "Map_Order";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Map_Order";
             this.Load += new System.EventHandler(this.Map_Order_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Map_Order_KeyDown);
             this.ResumeLayout(false);
 
         }

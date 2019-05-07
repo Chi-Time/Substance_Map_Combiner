@@ -218,5 +218,11 @@ namespace Substance_Map_Combiner
 
             //e.Cancel = (window == DialogResult.Cancel);
         }
+
+        private void Preferences_Window_KeyDown (object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Close ();
+        }
     }
 }

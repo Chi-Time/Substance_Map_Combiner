@@ -155,11 +155,13 @@
             this.Controls.Add(this.TxtBx_Suffixes);
             this.Controls.Add(this.CmBx_SuffixType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "Preferences_Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Preferences";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Preferences_Window_FormClosing);
             this.Load += new System.EventHandler(this.Preferences_Window_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Preferences_Window_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

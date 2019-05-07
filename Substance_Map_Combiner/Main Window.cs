@@ -122,6 +122,11 @@ namespace Substance_Map_Combiner
 
         private void B_Source_Folder_Button_Click (object sender, EventArgs e)
         {
+            ShowSourceFolderSelection ();
+        }
+
+        private void ShowSourceFolderSelection ()
+        {
             var fileDialog = new OpenFileDialog
             {
                 // Set validate names and check file exists to false otherwise windows will
@@ -232,6 +237,11 @@ namespace Substance_Map_Combiner
 
         private void B_Destination_Folder_Click (object sender, EventArgs e)
         {
+            ShowDestinationFolderSelection ();
+        }
+
+        private void ShowDestinationFolderSelection ()
+        {
             var fileDialog = new OpenFileDialog
             {
                 // Set validate names and check file exists to false otherwise windows will
@@ -252,6 +262,11 @@ namespace Substance_Map_Combiner
 
         private void B_Combine_Images_Click (object sender, EventArgs e)
         {
+            StartImageCombining ();
+        }
+
+        private void StartImageCombining ()
+        {
             if (FolderIsEmpty (_UserPreferences.SourceFolder))
             {
                 string caption = "No Images found!";
@@ -269,6 +284,7 @@ namespace Substance_Map_Combiner
                 MessageBox.Show (message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             _Worker.RunWorkerAsync ();
             B_Combine_Images.Enabled = false;
         }
@@ -568,6 +584,11 @@ namespace Substance_Map_Combiner
 
         private void B_MapOrder_Click (object sender, EventArgs e)
         {
+            DisplayMapOrder ();
+        }
+
+        private void DisplayMapOrder ()
+        {
             var mapOrder = new Map_Order (_MapSegments, _UserPreferences);
             mapOrder.ShowDialog (this);
         }
@@ -575,6 +596,21 @@ namespace Substance_Map_Combiner
         private void clearToolStripMenuItem_Click (object sender, EventArgs e)
         {
             ClearAppSelection ();
+        }
+
+        private void MainWindow_KeyDown (object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.S)
+                ShowSourceFolderSelection ();
+
+            if (e.KeyCode == Keys.D)
+                ShowDestinationFolderSelection ();
+
+            if (e.KeyCode == Keys.C)
+                StartImageCombining ();
+
+            if (e.KeyCode == Keys.M)
+                DisplayMapOrder ();
         }
     }
 }

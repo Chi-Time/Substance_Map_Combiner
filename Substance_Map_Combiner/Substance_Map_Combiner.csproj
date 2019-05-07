@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6A6E2EE6-56A0-4876-883A-4DA4C1313CAA}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Substance_Map_Combiner</RootNamespace>
     <AssemblyName>Substance_Map_Combiner</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

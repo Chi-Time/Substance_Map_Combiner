@@ -179,5 +179,11 @@ namespace Substance_Map_Combiner
                 LBX_MapOrder.Items.Add (imageName);
             }
         }
+
+        private void Map_Order_KeyDown (object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Close ();
+        }
     }
 }
