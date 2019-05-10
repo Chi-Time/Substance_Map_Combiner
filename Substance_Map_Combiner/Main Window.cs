@@ -74,6 +74,9 @@ namespace Substance_Map_Combiner
             {
                 Maps = _Maps
             };
+
+            //TODO: Fix this properly at somepoint by checking if map segments is null or empty.
+            B_MapOrder.Enabled = false;
         }
 
         private void AddNewMap (MapTypes mapType, string suffix, Color color)
@@ -96,7 +99,7 @@ namespace Substance_Map_Combiner
             SetupCheckBoxEvents ();
             SetupButtonClickEvents ();
             UpdateColorButtons ();
-            
+
             TxtBx_FileName.Text = _UserPreferences.ExportFileName;
             CB_FileType.Text = _UserPreferences.ExportFileType;
         }
@@ -605,16 +608,16 @@ namespace Substance_Map_Combiner
 
         private void MainWindow_KeyDown (object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.S)
+            if (e.Control && e.KeyCode == Keys.S)
                 ShowSourceFolderSelection ();
 
-            if (e.KeyCode == Keys.D)
+            if (e.Control && e.KeyCode == Keys.D)
                 ShowDestinationFolderSelection ();
 
-            if (e.KeyCode == Keys.C)
+            if (e.Control && e.KeyCode == Keys.C)
                 StartImageCombining ();
 
-            if (e.KeyCode == Keys.M)
+            if (e.Control && e.KeyCode == Keys.M)
                 DisplayMapOrder ();
         }
     }

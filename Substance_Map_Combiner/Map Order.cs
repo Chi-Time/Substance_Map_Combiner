@@ -25,7 +25,10 @@ namespace Substance_Map_Combiner
 
         private void InitialiseUI ()
         {
-            PopulateDropDown ();
+            if (_MapSegments.Count > 0)
+                PopulateDropDown ();
+            else
+                MessageBox.Show ("Unable to display order as no maps are currently selected!");
         }
 
         private void PopulateDropDown ()
@@ -38,9 +41,12 @@ namespace Substance_Map_Combiner
 
         private void Map_Order_Load (object sender, EventArgs e)
         {
-            var firstElememt = _MapSegments.First ();
-            DisplayMapList (firstElememt.Value);
-            CB_MapTypes.Text = firstElememt.Key.ToString ();
+            if (_MapSegments.Count > 0)
+            {
+                var firstElememt = _MapSegments.First ();
+                DisplayMapList (firstElememt.Value);
+                CB_MapTypes.Text = firstElememt.Key.ToString ();
+            }
         }
 
         //TODO: Better understand and document what this is doing - https://stackoverflow.com/questions/805165/reorder-a-winforms-listbox-using-drag-and-drop
