@@ -1,19 +1,26 @@
 Substance Map Combiner
 ======================
+
 A small program for combining multiple substance output sets into one map per channel. It's 64 bit only and has been tested on map sizes up to 8k. 8192x8192 maps will need around 6GB of RAM to combine safely due to their sheer size.
 
 # Demo
+![](https://github.com/Chi-Time/Substance_Map_Combiner/blob/dev/Images/Substance-Map-Combiner-Overview.gif)
 
-![](images/Substance-Map-Combiner-Overview.gif)
+**Turn this:**
+
+![](https://github.com/Chi-Time/Substance_Map_Combiner/blob/dev/Images/Texture-Sets-Example.png)
+
+**Into this:**
+
+![](https://github.com/Chi-Time/Substance_Map_Combiner/blob/dev/Images/Output-Sets-Example.png)
 
 # How To Use
 The application is fairly straight forward to use.
 
-
 ### Selecting Files
 First of all, to load maps, you have to select a source folder using the _Source Folder_ button or **Ctrl+S**. Then navigate to the folder which contains your texture sets for each of your channels. For instance a folder like this:
 
-![](images/Texture-Sets-Example.png)
+![](https://github.com/Chi-Time/Substance_Map_Combiner/blob/dev/Images/Texture-Sets-Example.png)
 
 Then the application will tick the relevent maps that it finds based on their channel suffix. You can edit what suffixes the program will look for in the preferences menu.
 
