@@ -29,6 +29,13 @@ namespace Substance_Map_Combiner
             Suffixes = new List<string> ();
         }
 
+        public void Reset ()
+        {
+            Suffixes.Clear ();
+            Suffixes.Add (DefaultSuffix);
+            OutputSuffix = DefaultSuffix;
+        }
+
         public Map Clone (Map map)
         {
             return new Map

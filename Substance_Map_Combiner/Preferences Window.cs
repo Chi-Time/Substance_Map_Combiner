@@ -203,13 +203,26 @@ namespace Substance_Map_Combiner
 
         private void B_Reset_Click (object sender, EventArgs e)
         {
-            //TODO: Make a reset to default's behaviour.
+            // Reset the current maps suffixes in the preferences.
+            var map = _UserPrefences.GetMap (_CurrentMapType);
+            map.Reset ();
+
+            // Update the UI of all changes.
+            UpdateTextBoxes ();
+        }
+
+        private void B_ResetAll_Click (object sender, EventArgs e)
+        {
+            // Go through each map in the users preferences and reset them to default suffixes.
             foreach (KeyValuePair<MapTypes, Map> entry in _UserPrefences.Maps)
             {
-                entry.Value.Suffixes.Clear ();
-                entry.Value.Suffixes.Add (entry.Value.DefaultSuffix);
-                entry.Value.OutputSuffix = entry.Value.DefaultSuffix;
+                entry.Value.Reset ();
             }
+
+            // Update the UI of all changes and go back to the base color selection to signify everything changed.
+            _CurrentMapType = MapTypes.BaseColor;
+            CmBx_SuffixType.SelectedIndex = (int)MapTypes.BaseColor;
+            UpdateTextBoxes ();
         }
 
         private void Preferences_Window_FormClosing (object sender, FormClosingEventArgs e)

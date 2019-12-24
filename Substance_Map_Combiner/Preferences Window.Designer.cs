@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent ()
         {
+            this.components = new System.ComponentModel.Container();
             this.CmBx_SuffixType = new System.Windows.Forms.ComboBox();
             this.TxtBx_Suffixes = new System.Windows.Forms.TextBox();
             this.TxtBx_OutputSuffix = new System.Windows.Forms.TextBox();
@@ -35,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.B_Reset = new System.Windows.Forms.Button();
             this.B_Close = new System.Windows.Forms.Button();
+            this.B_ResetAll = new System.Windows.Forms.Button();
+            this.TT_Info = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // CmBx_SuffixType
@@ -122,6 +125,7 @@
             this.B_Reset.Size = new System.Drawing.Size(75, 23);
             this.B_Reset.TabIndex = 6;
             this.B_Reset.Text = "Reset";
+            this.TT_Info.SetToolTip(this.B_Reset, "Resets the currently selected maps suffixes to default values.");
             this.B_Reset.UseVisualStyleBackColor = false;
             this.B_Reset.Click += new System.EventHandler(this.B_Reset_Click);
             // 
@@ -138,8 +142,26 @@
             this.B_Close.Size = new System.Drawing.Size(75, 23);
             this.B_Close.TabIndex = 7;
             this.B_Close.Text = "Close";
+            this.TT_Info.SetToolTip(this.B_Close, "Closes the preferences window. (Esc)");
             this.B_Close.UseVisualStyleBackColor = false;
             this.B_Close.Click += new System.EventHandler(this.B_Close_Click);
+            // 
+            // B_ResetAll
+            // 
+            this.B_ResetAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(54)))), ((int)(((byte)(65)))));
+            this.B_ResetAll.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.B_ResetAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(41)))), ((int)(((byte)(50)))));
+            this.B_ResetAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.B_ResetAll.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.B_ResetAll.ForeColor = System.Drawing.SystemColors.Control;
+            this.B_ResetAll.Location = new System.Drawing.Point(177, 121);
+            this.B_ResetAll.Name = "B_ResetAll";
+            this.B_ResetAll.Size = new System.Drawing.Size(86, 23);
+            this.B_ResetAll.TabIndex = 8;
+            this.B_ResetAll.Text = "Reset All";
+            this.TT_Info.SetToolTip(this.B_ResetAll, "Resets all maps suffixes to default values.");
+            this.B_ResetAll.UseVisualStyleBackColor = false;
+            this.B_ResetAll.Click += new System.EventHandler(this.B_ResetAll_Click);
             // 
             // Preferences_Window
             // 
@@ -147,6 +169,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(54)))), ((int)(((byte)(63)))));
             this.ClientSize = new System.Drawing.Size(534, 156);
+            this.Controls.Add(this.B_ResetAll);
             this.Controls.Add(this.B_Close);
             this.Controls.Add(this.B_Reset);
             this.Controls.Add(this.label2);
@@ -176,5 +199,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button B_Reset;
         private System.Windows.Forms.Button B_Close;
+        private System.Windows.Forms.Button B_ResetAll;
+        private System.Windows.Forms.ToolTip TT_Info;
     }
 }
