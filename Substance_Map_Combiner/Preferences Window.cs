@@ -56,7 +56,7 @@ namespace Substance_Map_Combiner
             foreach (string suffix in suffixes)
             {
                 if (string.IsNullOrWhiteSpace (suffix) == false)
-                    map.Suffixes.Add (suffix);
+                    map.Suffixes.Add (suffix.Trim ());
             }
         }
 
